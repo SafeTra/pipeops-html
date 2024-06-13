@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import ForgotPass from './pages/ForgotPass';
 import ResetPass from './pages/ResetPass';
+import ApiHandler from "./customHook/ApiHandler";
 
 export {
     Home,
@@ -30,4 +31,5 @@ export {
     Dashboard,
     ForgotPass,
     ResetPass,
+    ApiHandler,
 }
