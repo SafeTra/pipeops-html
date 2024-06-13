@@ -8,13 +8,19 @@ import Finance from './pages/Finance';
 import Contact from './pages/Contact';
 import Messages from './pages/Messages';
 import Settings from './pages/Settings';
+import Input from "./components/Input";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
+import ForgotPass from './pages/ForgotPass';
+import ResetPass from './pages/ResetPass';
+import Authenticate from './pages/Authenticate';
+import ApiHandler from "./customHook/ApiHandler";
 
 export {
     Home,
     About,
+    Input,
     Users,
     Login,
     Signup,
@@ -26,4 +32,8 @@ export {
     Contact,
     Messages,
     Dashboard,
+    ForgotPass,
+    ResetPass,
+    ApiHandler,
+    Authenticate,
 }
