@@ -4,7 +4,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useSpring, animated } from '@react-spring/web';
-import { success } from '../../assets';
+import { success, close_png, icon_close } from '../../assets';
 
 
 const Fade = React.forwardRef(function Fade(props, ref) {
@@ -95,7 +95,7 @@ const SuccessModal = ({ children, open, onClose }) => {
               <div>
                 <div className="flex justify-end self-end mr-[-7rem] mb-6 bg-Black font-extrabold">
                   <button className="cursor-pointer" onClick={onClose}>
-                    <img src="/images/png/close.png" alt="" width='100px' />
+                    <img src={icon_close} alt="" width='20px' />
                   </button>
                 </div>
                 <img src={success}alt="" width='100px' />

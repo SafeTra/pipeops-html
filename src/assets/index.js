@@ -5,11 +5,11 @@ import facebook from './icons/facebook.svg'
 import linkedin from './icons/linkedin.svg'
 import instagram from './icons/instagram.svg'
 import icon_menu from './icons/icon-menu.svg'
-import security_shield from './icons/security_shield.svg'
 import icon_close from './icons/icon-close.svg'
 import footer_logo from './icons/footer_logo.svg'
 import icon_close_regular from './icons/icon-close-regular.svg'
 import success from './icons/success.svg'
+import close_png from './images/close.png'
 
 export {
     logo,
@@ -17,9 +17,9 @@ export {
     icon_menu,
     icon_close,
     footer_logo,
-    security_shield,
     icon_close_regular,
-    success
+    success,
+    close_png
 }
 
 export const socialIcons = [

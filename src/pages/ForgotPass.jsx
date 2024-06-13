@@ -31,28 +31,33 @@ const ForgotPass = () => {
       setErrors(validationErrors);
     } else {
       setLoading(true);
-      setOpen2(true); //to remove
+      // setOpen2(true); //to 
       const params = {
-        process: "tp_forgot_password",
         email: formData.email,
       };
       try {
         const response = await axios.post(
-          "https://safetra-8eek.onrender.com/api/user/all-users",
+          "https://safetra-crz3.onrender.com/api/user/forgot-password-token",
           JSON.stringify(params),
           {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+            
+          } 
         );
-        const status = response.data.status;
+        console.log(response.data.message)
+        console.log("we reach heere");
+        console.log(response)
+        const status = response.status;
         if (status) {
+          
           setLoading(false);
           toast.success("Success");
           setData(response.data);
           setOpen2(true);
         } else {
+          console.log(response.data.message)
           setLoading(false);
           toast.error(
             "Unsuccessful! Email not registered, use a valid email or register"
@@ -97,7 +102,7 @@ const ForgotPass = () => {
             disabled={loading}
             type="submit"
             className="btn btn-form"
-            value="Send email"
+           value={loading ? "Sending..." : "Send email"}
           />
         </form>
       </div>

@@ -24,8 +24,7 @@
     "jspdf": "^2.5.1",
     "react-spring": "^9.7.3",
     "react-toastify": "^10.0.5",
-    "toastify": "^2.0.1",
-    "validator": "^13.12.0"
+    "toastify": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
