@@ -23,6 +23,16 @@ const ForgotPass = () => {
     setOpen2(false);
   };
 
+  const handleContinueToEmail = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = 'mailto:';
+    } else {
+      window.open('https://mail.google.com', '_blank');
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateFormData(formData);
@@ -119,11 +129,14 @@ const ForgotPass = () => {
             </p>
           </div>
         </div>
-        <Link href='https//:mail.google.com' target='_blank' >
-                <button type='button' style={{ backgroundColor: 'rgb(234,88,12)', color: 'rgba(255, 255, 255, 1)' }} className='w-[150px] text-[14px] py-2 rounded-lg font-int font-[600] '>
-                  Continue to email
-                </button>
-              </Link>
+    <button
+          type="button"
+          onClick={handleContinueToEmail}
+          style={{ backgroundColor: 'rgb(234,88,12)', color: 'rgba(255, 255, 255, 1)' }}
+          className="w-[150px] text-[14px] py-2 rounded-lg font-int font-[600]"
+        >
+          Continue to email
+        </button>
       </SuccessModal>
     </ForgotPassLayout>
   );
