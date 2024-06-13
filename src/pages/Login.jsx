@@ -1,55 +1,97 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { logo } from '../assets';
+import { ToastContainer, toast } from 'react-toastify';
+import isEmail from 'validator/lib/isEmail';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isPending, setIsPending] = useState(false);
-    
-    const handleLogin = e => {
-        e.preventDefault();
-        /* const user = {email, password}; */
-        setIsPending(true);
-        /* fetch(`http://localhost:8000/login/?email=${user.email}&password=${user.password}`)
-        .then(data => console.log(data)) */
-        fetch('https://safetra-8eek.onrender.com/api/user/all-users').then(res => res.json())
-        .then(data => console.log(data));
+  const navigate = useNavigate();
+  const checkboxRef = useRef(null);
+  const [focusState, setFocusState] = useState({
+    email: false,
+    password: false,
+  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-        /* /login?email=obifth%40gmail.com&password=kalilinux
-            find user with same email & password ->
-            if found, redirect to dashboard and use user data on dashboard
-            else, give a pop-msg and redirect to sign up page after 2s
-        */
+  const handleFocus = (field) => setFocusState(prevFocusState => ({...prevFocusState, [field]: true}));
+  const handleBlur = (field) => setFocusState(prevFocusState => ({...prevFocusState, [field]: false}));
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (password.length >= 8 && isEmail(email)) {
+        const response = await fetch(`https://safetra-crz3.onrender.com/api/user/login`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({email, password})
+        });
+
+        if (!response.ok) throw new Error();
+        const { token } = await response.json();
+        localStorage.setItem('token', token);
+
+        toast.success('Login successfully');
+        setTimeout(() => navigate('/dashboard'), 2000);
+      } else {
+        if (!email.trim() || !password.trim()) toast.error('Please fill in all fields correctly.');
+        else if (!isEmail(email)) toast.error("Invalid email address");
+        else if (password.length < 8) toast.error("Password is not correct");
+      }
+    } catch (error) {
+      toast.error("Password is not correct");
+      console.error(`Error during login:`, error);
     }
+  };
 
-    return (
+  return (
     <div className="bubbles_bg">
-         <div className="container">
-            <div className="login">
-          <div className="text-center pb-4"><Link to='/' className='_logo'><img src={logo}/></Link></div>
-          <h2 className="text-center font-bold text-xl lg:text-2xl pb-4">Welcome Back!</h2>
-                <form className="form">
-                <div className='input d-flex flex-column align-start'>
-                        <label>Email</label>
-                        <input name='email' type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder='Email address' required/>
-                    </div>
-                    <div className='input d-flex flex-column align-start'>
-                        <label>Password</label>
-                        <input name='password' type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder='Password (min. 8 character)' required/>
-                    </div>
-                    <div className="d-flex justify-between checkbox">
-                        <div><input type="checkbox"/> Remember Me</div>
-                        <Link to='/forgotPassword'><a>Forgot Your Password?</a></Link>
-                    </div>
-                    {!isPending && <button className="btn btn-form" type="submit" onClick={handleLogin}>Sign In</button>}
-                    {isPending && <button className="btn btn-form" type="submit" onClick={handleLogin}>Signing In...</button>}
-                    <p className=" text-center">Don’t have an account? <Link to='/signup' className="font-bold underline">JOIN FOR FREE</Link></p>
-                </form>
-            </div>
+      <div className="container">
+        <div className="login min-h-[95vh] grid items-center">
+          <div>
+            <div className="text-center pb-4"><Link to='/' className='_logo'><img src={logo}/></Link></div>
+            <h2 className="text-center font-bold text-xl lg:text-2xl pb-4">Welcome Back!</h2>
+            <form className="form" onSubmit={handleLogin}>
+              <div className='input flex gap-1 flex-column align-start'>
+                <label style={{ display: focusState.email ? 'block' : 'none'}}>Email</label>
+                <input
+                  name='email'
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder={!focusState.email ? 'Email' : ''}
+                  required
+                  onFocus={() => handleFocus('email')}
+                  onBlur={() => handleBlur('email')}
+                />
+              </div>
+              <div className='input flex gap-1 flex-column align-start'>
+                <label style={{ display: focusState.password ? 'block' : 'none'}}>Password</label>
+                <input
+                  name='password'
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder={!focusState.password ? 'Password' : ''}
+                  required
+                  onFocus={() => handleFocus('password')}
+                  onBlur={() => handleBlur('password')}
+                />
+              </div>
+              <div className="d-flex justify-between checkbox">
+                <div><input ref={checkboxRef} name='rememberMe' type="checkbox"/> Remember Me</div>
+                <Link to='/forgotPassword'>Forgot Your Password?</Link>
+              </div>
+              <button className="btn btn-form" type="submit">Sign In</button>
+              <p className="text-center">Don’t have an account? <Link to='/signup' className="font-bold underline">JOIN FOR FREE</Link></p>
+            </form>
+          </div>
         </div>
+      </div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
-    );
-}
+  );
+};
 
 export default Login;

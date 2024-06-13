@@ -10,7 +10,7 @@
 
   --radius: 0.3125rem;
 }
-a, .nav_link:hover, #how-it-works span, .btn-outline, nav .nav_link.active, nav .nav_link:focus{color: var(--clr-orange);}
+a, .nav_link:hover, #how-it-works span, .btn-outline, nav .nav_link.active, nav .nav_link:focus, .signup input + a{color: var(--clr-orange);}
 body{ font: 400 clamp(14px, 1vw, 16px)/1.5 "Plus Jakarta Sans", sans-serif; color: var(--clr-black)}
 h2{font-size: 1.75rem;}
 h1, h2, .text-balance{text-wrap: balance;}
@@ -19,7 +19,7 @@ img{max-width: 100%; object-fit: cover;}
 .m-0, ul{margin: 0}
 .w-30{width: 30%;}
 .w-70, .verify input{width: 70%;}
-.w-100, .col, .btn-form, .signup input:not([type="checkbox"]), .forgotPass input:not([type="checkbox"]), .login input:not([type="checkbox"]), .authenticate input{width: 100%;}
+.w-100, .col, .btn-form, .signup input:not([type="checkbox"]), .login input:not([type="checkbox"]), .authenticate input{width: 100%;}
 .fw-500{font-weight: 500;}
 .fw-700, .btn, nav .nav_link.active, nav .nav_link:hover, nav .nav_link:focus{font-weight: 700;}
 .d-flex{display: flex; align-items: center; gap: 0.625rem;}
@@ -37,19 +37,18 @@ img{max-width: 100%; object-fit: cover;}
 .header {
   padding-block: .75rem; position: sticky;
   top: 0; left: 0; z-index: 100;
-  width: 100%; background-color: var(--pink-100); 
+  width: 100%; background-color: var(--pink-100);
 }
-.btn:active, .btn-form:active {color: #B91C1C; background: #fff;}
 .header, .review, .reviews img, nav, #faqs, #faqs .answer {transition: all 0.3s linear;}
-.btn,.input input, .hero_card, .review{border-radius: var(--radius);}
+.btn, .hero_card, .review{border-radius: var(--radius);}
 .sticky {box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); background-color: rgba(255, 255, 255, .98); }
 .nav_link{color: var(--clr-black); font-size: 16px; padding-block: .5rem}
 .form .checkbox.d-flex{gap: 0rem;}
 .form .input + .input, form .checkbox, .authenticate .d-flex{margin-top: 1.31rem}
 .authenticate .security{padding: .7rem 1.3rem}
-.signup, .login, .forgotPass, .authenticate, .verify{margin: 0 auto 2rem; max-width: 380px; background: url('./assets/icons/bubbles-mobile.svg') right top no-repeat, url('./assets/icons/bubbles_down-mobile.svg') left bottom no-repeat;}
+.signup, .login, .authenticate, .verify{margin: 0 auto 2rem; max-width: 380px; background: url('./assets/icons/bubbles-mobile.svg') right top no-repeat, url('./assets/icons/bubbles_down-mobile.svg') left bottom no-repeat;}
 .input label{font: 700 .85rem/1.375 "Plus Jakarta Sans", sans-serif; color: var(--clr-black); }
-.input input{border: 1px solid var(--gray-200); background: var(--clr-white); padding: 1.0625rem 1rem 1.0625rem 1.25rem;}
+.input input{border-bottom: 1px solid var(--gray-200); background: var(--clr-white); padding-bottom: 4px;}
 .btn-outline, .btn-primary{padding: .5rem 1rem;}
 .btn-form{margin-block: 1.31rem; padding: 1rem; cursor: pointer; font-size: 1rem; letter-spacing: 1px;}
 .btn-form:hover, .btn-form:focus{background-color: #EA580C;}
@@ -60,7 +59,7 @@ img{max-width: 100%; object-fit: cover;}
 .btn-form, .btn-primary, .btn-outline:hover{background: linear-gradient(90deg, rgba(229, 78, 12, .7) 0%, #e54e0c, rgba(229, 78, 12, .7) 100%); color: var(--clr-white);}
 .verify > .d-flex{margin-block: 2rem;}
 .verify{min-height: calc(100vh - 10rem); display: grid; place-content: center;}
-section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem;}
+section, footer, .login, .authenticate, .verify{padding-block: 3rem;}
 .hero_section{padding-top: 2.5rem;}
 .hero_section h1{font-size: clamp(1.8rem, 2.5vw, 3rem); line-height: 1.2;}
 .hero_section h1 + p{padding-block: 1rem;}
@@ -68,12 +67,12 @@ section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem
 .hero_circle p{position: absolute; top: 30%; left: 45%;}
 .hero_cards{position: absolute; top: 60%; left: 55%;}
 .hero_card{background-color: var(--clr-white); padding: 2rem 1rem; color: var(--gray-300); box-shadow: 0 0 10px rgba(0, 0, 0, .1);}
-.hero_card li i, #how-it-works span, .signup input:focus{font-size: 1rem; margin-right: .2rem;}
-._logo, #how-it-works > .d-flex, #services p,#faqs .question__heading, footer .copyright, footer .socials, #how-it-works .d-grid{padding-top: 1rem}
+.hero_card li i, #how-it-works span{font-size: 1rem; margin-right: .2rem;}
+#how-it-works > .d-flex, #services p,#faqs .question__heading, footer .copyright, footer .socials, #how-it-works .d-grid{padding-top: 1rem}
 #services{background: url('./assets/icons/vector.svg') no-repeat center;}
 #services a{font-size: clamp(12px, .9vw, .8rem);}
 .review{box-shadow: 0 0 .5rem rgba(0, 0, 0, .1); padding: 2rem;}
-.img-container { width: 150px; height: 150px; margin: 0 auto 1.5rem; } 
+.img-container { width: 150px; height: 150px; margin: 0 auto 1.5rem; }
 .hero_circle, .img-container, #person-img { position: relative; }
 .img-container::before, #person-img{width: 100%; height: 100%;}
 .hero_circle, .img-container, #person-img,.img-container::after, .img-container::before {border-radius: 50%;}
@@ -84,7 +83,7 @@ section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem
   display: grid; place-items: center;
   content: "\f10e"; position: absolute;
   top: 0; left: 0;color: var(--clr-white);
-  transform: translateY(25%); background: #EA580C;  
+  transform: translateY(25%); background: #EA580C;
 }
 .reviews h2, footer h3, #faqs .question__heading, #services p{margin-bottom: .5rem;}
 .brands .d-flex, footer .d-flex{flex-wrap: wrap;gap: 1.5rem;}
@@ -95,7 +94,7 @@ section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem
 .footer_logo{align-self: center;}
 footer .nav_item + .nav_item{margin-top: .5rem;}
 footer .nav_link:hover, #services a:hover{text-decoration: underline;}
-.input input:focus, .btn, .verify input{border: 1px solid var(--clr-orange)}
+.btn, .verify input{border: 1px solid var(--clr-orange)}
 
 @media screen and (max-width: 979px){
   nav.d-flex > .d-flex{width: 100%;}
@@ -105,14 +104,15 @@ footer .nav_link:hover, #services a:hover{text-decoration: underline;}
   nav, nav > ul{flex-direction: column;}
 }
 
-@media screen and (min-width: 980px) {  
+@media screen and (min-width: 980px) {
   .container,#faqs, .reviews, .review{width: 80%}
   .verify input{width: 50%;}
   .d-grid,.hero_section > .d-flex{column-gap: 4rem;}
   header .d-flex, #how-it-works > .d-grid{gap: 1rem;}
   .menu, .slider-btn-sm{display: none !important;}
-  .signup, .login, .forgotPass, .authenticate, .verify{max-width: 480px; background: none;}
+  .signup, .login, .authenticate, .verify{max-width: 480px; background: none;}
   nav .nav_link.active, nav .nav_link:hover, nav .nav_link:focus{border-bottom: 2px solid var(--clr-orange)}
   .bubbles_bg{background: url('./assets/icons/bubbles-desktop.svg') right top no-repeat, url('./assets/icons/bubbles_down-desktop.svg') left bottom no-repeat;}
 }
+@media screen and (min-width: 1200px) {#faqs, .reviews{width: 50%}}
 @media screen and (min-width: 1200px) {#faqs, .reviews{width: 50%}}
