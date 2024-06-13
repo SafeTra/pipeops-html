@@ -40,7 +40,7 @@ const Login = () => {
                     </div>
                     <div className="d-flex justify-between checkbox">
                         <div><input type="checkbox"/> Remember Me</div>
-                        <a>Forgot Your Password?</a>
+                        <Link to='/forgotPassword'><a>Forgot Your Password?</a></Link>
                     </div>
                     {!isPending && <button className="btn btn-form" type="submit" onClick={handleLogin}>Sign In</button>}
                     {isPending && <button className="btn btn-form" type="submit" onClick={handleLogin}>Signing In...</button>}

@@ -11,6 +11,8 @@ import Settings from './pages/Settings';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
+import ForgotPass from './pages/ForgotPass';
+import ResetPass from './pages/ResetPass';
 
 export {
     Home,
@@ -26,4 +28,6 @@ export {
     Contact,
     Messages,
     Dashboard,
+    ForgotPass,
+    ResetPass,
 }
