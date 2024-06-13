@@ -33,14 +33,14 @@ const ResetPass = () => {
       setErrors(validationErrors);
     } else {
       setLoading(true);
-      setOpen2(true); //to remove
+      // setOpen2(true); //to remove
       const params = {
         process: "tp_reset_password",
         password: formData.password,
       };
       try {
         const response = await axios.post(
-          "https://safetra-8eek.onrender.com/api/user/all-users",
+          "https://safetra-crz3.onrender.com/api/user/reset-password",
           JSON.stringify(params),
           {
             headers: {
