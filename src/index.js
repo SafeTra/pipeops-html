@@ -8,11 +8,14 @@ import Finance from './pages/Finance';
 import Contact from './pages/Contact';
 import Messages from './pages/Messages';
 import Settings from './pages/Settings';
+import Input from "./components/Input/Input";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import ForgotPass from './pages/ForgotPass';
 import ResetPass from './pages/ResetPass';
+import Container from "./components/Container";
+import NewTransaction from './pages/NewTransaction';
 import ApiHandler from "./customHook/ApiHandler";
 
 export {
@@ -20,6 +23,7 @@ export {
     About,
     Users,
     Login,
+    Input,
     Signup,
     Header,
     Footer,
@@ -29,7 +33,9 @@ export {
     Contact,
     Messages,
     Dashboard,
+    Container,
     ForgotPass,
     ResetPass,
     ApiHandler,
+    NewTransaction,
 }
