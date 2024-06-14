@@ -19,7 +19,7 @@ img{max-width: 100%; object-fit: cover;}
 .m-0, ul{margin: 0}
 .w-30{width: 30%;}
 .w-70, .verify input{width: 70%;}
-.w-100, .col, .btn-form, .signup input:not([type="checkbox"]), .login input:not([type="checkbox"]), .authenticate input{width: 100%;}
+.w-100, .col, .btn-form, .signup input:not([type="checkbox"]), .forgotPass input:not([type="checkbox"]), .login input:not([type="checkbox"]), .authenticate input{width: 100%;}
 .fw-500{font-weight: 500;}
 .fw-700, .btn, nav .nav_link.active, nav .nav_link:hover, nav .nav_link:focus{font-weight: 700;}
 .d-flex{display: flex; align-items: center; gap: 0.625rem;}
@@ -39,6 +39,7 @@ img{max-width: 100%; object-fit: cover;}
   top: 0; left: 0; z-index: 100;
   width: 100%; background-color: var(--pink-100);
 }
+.btn:active, .btn-form:active {color: #B91C1C; background: #fff;}
 .header, .review, .reviews img, nav, #faqs, #faqs .answer {transition: all 0.3s linear;}
 .btn, .hero_card, .review{border-radius: var(--radius);}
 .sticky {box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); background-color: rgba(255, 255, 255, .98); }
@@ -46,7 +47,7 @@ img{max-width: 100%; object-fit: cover;}
 .form .checkbox.d-flex{gap: 0rem;}
 .form .input + .input, form .checkbox, .authenticate .d-flex{margin-top: 1.31rem}
 .authenticate .security{padding: .7rem 1.3rem}
-.signup, .login, .authenticate, .verify{margin: 0 auto 2rem; max-width: 380px; background: url('./assets/icons/bubbles-mobile.svg') right top no-repeat, url('./assets/icons/bubbles_down-mobile.svg') left bottom no-repeat;}
+.signup, .login, .forgotPass, .authenticate, .verify{margin: 0 auto 2rem; max-width: 380px; background: url('./assets/icons/bubbles-mobile.svg') right top no-repeat, url('./assets/icons/bubbles_down-mobile.svg') left bottom no-repeat;}
 .input label{font: 700 .85rem/1.375 "Plus Jakarta Sans", sans-serif; color: var(--clr-black); }
 .input input{border-bottom: 1px solid var(--gray-200); background: var(--clr-white); padding-bottom: 4px;}
 .btn-outline, .btn-primary{padding: .5rem 1rem;}
@@ -59,7 +60,7 @@ img{max-width: 100%; object-fit: cover;}
 .btn-form, .btn-primary, .btn-outline:hover{background: linear-gradient(90deg, rgba(229, 78, 12, .7) 0%, #e54e0c, rgba(229, 78, 12, .7) 100%); color: var(--clr-white);}
 .verify > .d-flex{margin-block: 2rem;}
 .verify{min-height: calc(100vh - 10rem); display: grid; place-content: center;}
-section, footer, .login, .authenticate, .verify{padding-block: 3rem;}
+section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem;}
 .hero_section{padding-top: 2.5rem;}
 .hero_section h1{font-size: clamp(1.8rem, 2.5vw, 3rem); line-height: 1.2;}
 .hero_section h1 + p{padding-block: 1rem;}
@@ -110,9 +111,8 @@ footer .nav_link:hover, #services a:hover{text-decoration: underline;}
   .d-grid,.hero_section > .d-flex{column-gap: 4rem;}
   header .d-flex, #how-it-works > .d-grid{gap: 1rem;}
   .menu, .slider-btn-sm{display: none !important;}
-  .signup, .login, .authenticate, .verify{max-width: 480px; background: none;}
+  .signup, .login, .forgotPass, .authenticate, .verify{max-width: 480px; background: none;}
   nav .nav_link.active, nav .nav_link:hover, nav .nav_link:focus{border-bottom: 2px solid var(--clr-orange)}
   .bubbles_bg{background: url('./assets/icons/bubbles-desktop.svg') right top no-repeat, url('./assets/icons/bubbles_down-desktop.svg') left bottom no-repeat;}
 }
-@media screen and (min-width: 1200px) {#faqs, .reviews{width: 50%}}
 @media screen and (min-width: 1200px) {#faqs, .reviews{width: 50%}}
