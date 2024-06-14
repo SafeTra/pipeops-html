@@ -1,5 +1,3 @@
-
-import React, { useState } from 'react';
 import { Button, Drawer } from 'antd';
 import { Homebtn, StatusTag } from './button';
 import {DeactivateModal} from '../dashboardComponents/shared';
@@ -10,7 +8,7 @@ export const BasicDrawer = ({openDrawer, onClose}) => {
 
   return (
     <>
-      <Drawer title="Transaction Details" onClose={onClose} open={openDrawer}>
+      <Drawer title="Action Required" onClose={onClose} open={openDrawer}>
         <div className='space-y-10'>
           <div className='w-full'>
             <p className='font-[400] text-[14px] font-Rob'>Data</p>
@@ -62,7 +60,7 @@ export const StaffDrawer = ({openDrawer, onClose}) => {
 
   return (
     <>
-      <Drawer title="Account Info" onClose={onClose} width={650} open={openDrawer}>
+      <Drawer title="Pending" onClose={onClose} width={650} open={openDrawer}>
         <div className='space-y-10'>
           <div className='w-full'>
             <p className='font-[500] text-[24px] font-Rob'>Adekunle Bamidele <StatusTag status={['Active']}/></p>
@@ -144,7 +142,7 @@ export const OtherDrawer = () => {
       <Button type="primary" onClick={showDrawer}>
         Open
       </Button>
-      <Drawer title="Basic Drawer" onClose={onClose} open={open}>
+      <Drawer title="Completed" onClose={onClose} open={open}>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
