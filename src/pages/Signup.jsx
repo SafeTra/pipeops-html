@@ -22,7 +22,7 @@ const Signup = () => {
     const { fetchData } = ApiHandler();
     const [isEightChars, setIsEightChars] = useState(false);
     const [isCapitalise, setIsCapitalise] = useState(false);
-    const [isNumOrSpecial, setIsNumOrSpecial] = useState(false);
+    const [isNumAndSpecial, setIsNumAndSpecial] = useState(false);
 
     const hanldeFocus = (field) => setFocusState(prevFocusState => ({...prevFocusState, [field]: true}));
     const hanldeBlur = (field) => setFocusState(prevFocusState => ({...prevFocusState, [field]: false}));
@@ -43,10 +43,10 @@ const Signup = () => {
     useEffect(() => {
       setIsEightChars(password.length >= 8)
       setIsCapitalise(/[a-z]/.test(password) && /[A-Z]/.test(password));
-      setIsNumOrSpecial(/[!@#$%^&*(),.?":{}|<>0-9]/.test(password))
+      setIsNumAndSpecial(/[!@#$%^&*(),.?":{}|<>]/.test(password) && /[0-9]/.test(password))
 
-      setIsStrongPass(isEightChars && isCapitalise && isNumOrSpecial)
-    }, [password, isEightChars, isCapitalise, isNumOrSpecial])
+      setIsStrongPass(isEightChars && isCapitalise && isNumAndSpecial)
+    }, [password, isEightChars, isCapitalise, isNumAndSpecial])
 
     const handleSubmit = async e => {
       e.preventDefault();
@@ -73,7 +73,7 @@ const Signup = () => {
           else if (!isEmail(email)) toast.error("Invalid email address")
           else if (!isEightChars) toast.error("Password must be at least 8 characters")
           else if (!isCapitalise) toast.error("Password must contain at least one UPPERCASE and one LOWERCASE character")
-          else if (!isNumOrSpecial) toast.error("Password must contain at least one number or special character")
+          else if (!isNumAndSpecial) toast.error("Password must contain at least one number or special character")
           else if (!checkboxRef.current.checked) toast.error("Please agree to the Terms and Conditions")
         }
       } catch (error) {
@@ -104,11 +104,11 @@ const Signup = () => {
                   <input name='password' type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder={!focusState.password ? 'Password' : ''} required onFocus={() => hanldeFocus('password')} onBlur={() => hanldeBlur('password')}/>
               </div>
               {password && <div className="pt-3 text-gray-500">
-                <p className={`lg:pl-8 md:pl-4 ${isStrongPass ? 'text-[#1da466] font-medium' : 'text-[#f00]'}`}>Strong password must have:</p>
+                <p className={`lg:pl-8 md:pl-4 ${isStrongPass ? 'text-[#1da466] font-medium' : ''}`}>Strong password must have:</p>
                 <ul className='*:list-disc grid justify-center '>
-                  <li className={isEightChars ? 'text-[#1da466] font-medium' : 'text-[#f00]'}>At least 8 characters </li>
-                  <li className={isCapitalise ? 'text-[#1da466] font-medium' : 'text-[#f00]'}>At least one UPPERCASE and one LOWERCASE character</li>
-                  <li className={isNumOrSpecial ? 'text-[#1da466] font-medium' : 'text-[#f00]'}>At least one number or special character {'(!@#$%^&*(),.?":{}|<>0-9)'}</li>
+                  <li className={isEightChars ? 'text-[#1da466] font-medium' : ''}>At least 8 characters </li>
+                  <li className={isCapitalise ? 'text-[#1da466] font-medium' : ''}>At least one UPPERCASE and one LOWERCASE character</li>
+                  <li className={isNumAndSpecial ? 'text-[#1da466] font-medium' : ''}>At least one number and special character</li>
                 </ul>
               </div>}
               <div className="checkbox d-flex fw-500"><input ref={checkboxRef} className='mr-2' required type="checkbox"/>I agree to <Link to="">Terms & Conditions</Link></div>
