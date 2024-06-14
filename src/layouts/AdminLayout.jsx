@@ -24,10 +24,10 @@ const SideBar = () => {
   };
 
   const menuItems = [
-    { icon: <AiFillDashboard />, label: "Transaction" },
-    { icon: <FaUsers />, label: "Integration" },
-    { icon: <FaEnvelopeOpenText />, label: "Disputes" },
-    { icon: <RiMoneyDollarCircleFill />, label: "Payments" },
+    { icon: <AiFillDashboard />, label: "Dashboard" },
+    { icon: <FaUsers />, label: "Users" },
+    { icon: <FaEnvelopeOpenText />, label: "Messages" },
+    { icon: <RiMoneyDollarCircleFill />, label: "Pricing" },
     { icon: <IoSettingsSharp />, label: "Settings" },
     { icon: <IoExitOutline />, label: "Logout" },
   ];
@@ -65,7 +65,7 @@ const SideBar = () => {
             className={`mb-8 flex items-center cursor-pointer hover:text-orange-500 transition-transform transform duration-500 border border-gray-300 rounded-lg p-2`}
             onClick={() => handleItemClick(index)}
           >
-            <Link to={`/user/${item.label}`} className="flex items-center">
+            <Link to={`/admin/${item.label}`} className="flex items-center">
               {item.icon}
               {!arrowDirection && (
                 <span className="text-base ml-2">{item.label}</span>
@@ -93,7 +93,7 @@ export const MiddleContent = () => {
   );
 };
 
-const DashboardLayout = () => {
+const AdminLayout = () => {
   return (
     <div className="h-screen grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
       <div className="row-span-2 border-r border-gray-200">
@@ -109,4 +109,4 @@ const DashboardLayout = () => {
   );
 }
 
-export default DashboardLayout
+export default AdminLayout
