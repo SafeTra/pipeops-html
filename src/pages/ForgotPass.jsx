@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SuccessModal from "../components/modals/SuccessModal";
 import { Link } from "react-router-dom";
+
 const ForgotPass = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -22,6 +23,16 @@ const ForgotPass = () => {
   const handleClose2 = () => {
     setOpen2(false);
   };
+
+  const handleContinueToEmail = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = 'mailto:';
+    } else {
+      window.open('https://mail.google.com', '_blank');
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +97,7 @@ const ForgotPass = () => {
       desc="Enter your email address and we’ll send you a link to reset your password"
       
     >
-      <div className="w-full px-6 md:px-12 font-inter">
+      <div className="w-full font-inter">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mb-[5rem]">
           <AuthInput
             id="email"
@@ -119,11 +130,14 @@ const ForgotPass = () => {
             </p>
           </div>
         </div>
-        <Link href='https//:mail.google.com' target='_blank' >
-                <button type='button' style={{ backgroundColor: 'rgb(234,88,12)', color: 'rgba(255, 255, 255, 1)' }} className='w-[150px] text-[14px] py-2 rounded-lg font-int font-[600] '>
-                  Continue to email
-                </button>
-              </Link>
+    <button
+          type="button"
+          onClick={handleContinueToEmail}
+          style={{ backgroundColor: 'rgb(234,88,12)', color: 'rgba(255, 255, 255, 1)' }}
+          className="w-[150px] text-[14px] py-2 rounded-lg font-int font-[600]"
+        >
+          Continue to email
+        </button>
       </SuccessModal>
     </ForgotPassLayout>
   );
