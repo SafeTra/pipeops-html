@@ -41,13 +41,13 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
-    <DashboardContainer title='My Transactions'>
+    <DashboardContainer title='My Transactions' childClassName='w-full'>
       <div className="flex justify-between">
         <Link
           to="/user/transaction"
           className="flex justify-center items-center"
         >
-          <div className="rounded-full inline-block shadow-md bg-white py-4 px-3">
+          <div className="rounded-full inline-block shadow-md py-4 px-3">
             <img src={arrow_left} alt="Prev Page" />
           </div>
         </Link>
@@ -97,7 +97,7 @@ const Transaction = () => {
       </div>
 
       {data && (
-        <div className="p-6 shadow-lg">
+        <div className="p-6">
           <div>
             <h3 className="font-int font-[600] text-[23px]">
               {table}
