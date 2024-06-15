@@ -11,6 +11,7 @@ import arrow_left from './icons/arrow_left.svg'
 import icon_close_regular from './icons/icon-close-regular.svg'
 import success from './icons/success.svg'
 import close_png from './images/close.png'
+import  emptyUserDash from './images/emptyUserDash.png'
 
 export {
     logo,
@@ -21,7 +22,8 @@ export {
     footer_logo,
     icon_close_regular,
     success,
-    close_png
+    close_png,
+    emptyUserDash
 }
 
 export const socialIcons = [

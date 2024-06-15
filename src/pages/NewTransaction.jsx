@@ -34,10 +34,12 @@ const NewTransaction = () => {
   };
 
   return (
-    <Container className="lg:flex items-start">
+    <Container className="lg:flex items-start px-4">
+      <Link to='/user/transaction'>
       <div className="rounded-full inline-block shadow-md bg-white py-4 px-3">
-        <Link to='/dashboard'><img src={arrow_left} alt="Prev Page" /></Link>
+        <img src={arrow_left} alt="Prev Page" />
       </div>
+      </Link>
       <div className="lg:w-2/3 mx-auto">
         <form onSubmit={handleNewTransaction}>
           <hr className='mt-6' />
