@@ -126,7 +126,7 @@ const ResetPass = () => {
             disabled={loading}
             type="submit"
             className="btn btn-form"
-            value="Reset Password"
+            value={loading ? "Reseting..." : "Reset Password"}
           />
         </form>
       </div>
