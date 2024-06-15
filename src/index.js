@@ -21,6 +21,7 @@ import Payments from './pages/Payments';
 import Transaction from './pages/Transaction';
 import NewTransaction from './pages/NewTransaction';
 import Integration from './pages/Integration';
+import DashboardContainer from './components/DashboardContainer';
 
 export {
 	Home,
@@ -46,4 +47,5 @@ export {
 	NewTransaction,
 	Transaction,
 	Integration,
+	DashboardContainer,
 };
