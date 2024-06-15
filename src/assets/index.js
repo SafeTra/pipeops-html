@@ -5,6 +5,7 @@ import facebook from './icons/facebook.svg'
 import linkedin from './icons/linkedin.svg'
 import instagram from './icons/instagram.svg'
 import icon_menu from './icons/icon-menu.svg'
+import brand_logo from './icons/brand_logo.svg'
 import footer_logo from './icons/footer_logo.svg'
 import icon_close from './icons/icon-close.svg'
 import arrow_left from './icons/arrow_left.svg'
@@ -19,6 +20,7 @@ export {
     icon_menu,
     icon_close,
     arrow_left,
+    brand_logo,
     footer_logo,
     icon_close_regular,
     success,
