@@ -1,6 +1,10 @@
+import { DashboardContainer } from "..";
+
 const Logout = () => {
   return (
-    <div>Logout</div>
+    <DashboardContainer childClassName='' title='Logout'>
+      Logout
+    </DashboardContainer>
   )
 }
 

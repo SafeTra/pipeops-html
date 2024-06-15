@@ -9,6 +9,7 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoSettingsSharp, IoExitOutline } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { NavLink, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { brand_logo } from "../assets";
 
 const SideBar = () => {
@@ -26,10 +27,10 @@ const SideBar = () => {
   const navLink = `flex items-center w-full  ${arrowDirection ? 'justify-center' : ''}`
 
   const menuItems = [
-    { icon: <AiFillDashboard className="text-xl lg:text-2xl" />, label: "Transaction" },
-    { icon: <FaUsers className="text-xl lg:text-2xl" />, label: "Integration" },
-    { icon: <FaEnvelopeOpenText className="text-xl lg:text-2xl" />, label: "Disputes" },
-    { icon: <RiMoneyDollarCircleFill className="text-xl lg:text-2xl" />, label: "Payments" },
+    { icon: <AiFillDashboard className="text-xl lg:text-2xl" />, label: "Dashboard" },
+    { icon: <FaUsers className="text-xl lg:text-2xl" />, label: "Users" },
+    { icon: <FaEnvelopeOpenText className="text-xl lg:text-2xl" />, label: "Messages" },
+    { icon: <RiMoneyDollarCircleFill className="text-xl lg:text-2xl" />, label: "Pricing" },
     { icon: <IoSettingsSharp className="text-xl lg:text-2xl" />, label: "Settings" },
     { icon: <IoExitOutline className="text-xl lg:text-2xl" />, label: "Logout" },
   ];
@@ -68,7 +69,7 @@ const SideBar = () => {
             className={`flex items-center ${arrowDirection ? 'justify-center mb-6' : 'mb-8 px-6'} cursor-pointer hover:text-orange-500 transition-transform transform duration-500`}
             onClick={() => handleItemClick(index)}
           >
-            <NavLink to={`/user/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
+            <NavLink to={`/admin/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
               {item.icon}
               {!arrowDirection && (
                 <span className="text-base ml-2">{item.label}</span>
@@ -83,9 +84,9 @@ const SideBar = () => {
 
 export const TopBar = () => {
   return (
-    <div className="flex flex-row space-x-6 px-16 py-5 text-4xl text-slate-700 justify-end">
-      <IoMdNotificationsOutline className="text-xl lg:text-2xl"/>
-      <FaUserAlt className="text-xl lg:text-2xl"/>
+    <div className="flex bg-orange-400 flex-row space-x-6 px-16 py-5 text-4xl text-slate-700 justify-end">
+      <IoMdNotificationsOutline className="text-xl lg:text-2xl text-white"/>
+      <FaUserAlt className="text-xl lg:text-2xl text-white"/>
     </div>
   );
 };
@@ -96,7 +97,7 @@ export const MiddleContent = () => {
   );
 };
 
-const DashboardLayout = () => {
+const AdminLayout = () => {
   return (
     <div className="h-screen grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
       <div className="row-span-2 border-r border-gray-200">
@@ -105,11 +106,11 @@ const DashboardLayout = () => {
       <div className="border-b border-gray-200">
         <TopBar />
       </div>
-      <div className="overflow-y-auto bg-[#F0F3F8]">
+      <div className="overflow-y-auto">
         <MiddleContent />
       </div>
     </div>
   );
 }
 
-export default DashboardLayout
+export default AdminLayout

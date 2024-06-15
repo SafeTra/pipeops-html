@@ -4,7 +4,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useSpring, animated } from '@react-spring/web';
-import { success, close_png, icon_close } from '../../assets';
+import { success, icon_close } from '../../assets';
 
 
 const Fade = React.forwardRef(function Fade(props, ref) {
@@ -53,7 +53,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
   bgcolor: 'background.paper',
   borderRadius: '30px',
   boxShadow: 24,
@@ -98,7 +98,7 @@ const SuccessModal = ({ children, open, onClose }) => {
                     <img src={icon_close} alt="" width='20px' />
                   </button>
                 </div>
-                <img src={success}alt="" width='100px' />
+                <img src={success} alt="Success Icon" width='100px' />
               </div>
               {children}
               {/* <button onClick={generatePdf}></button> */}

@@ -1,6 +1,10 @@
+import { DashboardContainer } from "..";
+
 const Settings = () => {
   return (
-    <div>Settings</div>
+    <DashboardContainer childClassName='' title='Settings'>
+      Settings
+    </DashboardContainer>
   )
 }
 
