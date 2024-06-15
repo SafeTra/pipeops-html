@@ -58,7 +58,7 @@ const NewTransaction = () => {
   };
 
   return (
-    <DashboardContainer url='/user' title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
+    <DashboardContainer bgClr="white" url='/user' title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
       <form onSubmit={handleNewTransaction}>
         <hr className='mt-6' />
         <Input name='title' value={newTransaction.title} onChange={handleInputChange} type='text' label='Transaction Title' />

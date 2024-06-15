@@ -41,7 +41,7 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
-    <DashboardContainer title='My Transactions'>
+    <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
       <div className="flex justify-between">
         <Link
           to="/user/transaction"
@@ -97,7 +97,7 @@ const Transaction = () => {
       </div>
 
       {data && (
-        <div className="p-6 shadow-lg">
+        <div className="p-6">
           <div>
             <h3 className="font-int font-[600] text-[23px]">
               {table}
