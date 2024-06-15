@@ -22,7 +22,7 @@ const Login = () => {
 
         try {
           if (password.length >= 8 && isEmail(email)) {
-            const response = await fetch(`https://safetra-crz3.onrender.com/api/user/login`, {
+            const response = await fetch(`https://safetra-be.onrender.com/api/user/login`, {
               method: 'POST', headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({email, password})
             })
@@ -63,11 +63,11 @@ const Login = () => {
               </div>
               <div className="d-flex justify-between checkbox">
                 <div><input ref={checkboxRef} name='rememberMe' type="checkbox"/> Remember Me</div>
-                <Link to='/forgotPassword'>Forgot Your Password?</Link>
+                <Link to='/forgotPassword' className='hover:text-[#e54e0c] hover:underline'>Forgot Your Password?</Link>
               </div>
               <button className="btn btn-form" type="submit" onClick={handleLogin}>Sign In</button>
               <ToastContainer />
-              <p className=" text-center">Don’t have an account? <Link to='/signup' className="font-bold underline">JOIN FOR FREE</Link></p>
+              <p className=" text-center">Don’t have an account? <Link to='/signup' className="font-bold underline text-[#e54e0c]">JOIN SAFETRA</Link></p>
           </form>
           </div>
         </div>
