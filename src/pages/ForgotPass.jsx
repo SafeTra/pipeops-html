@@ -59,7 +59,7 @@ const ForgotPass = () => {
         );
       
         console.log("we reach heere");
-        console.log(response)
+        console.log(response.data.error)
         const status = response.status;
         if (status) {
           
@@ -67,8 +67,8 @@ const ForgotPass = () => {
           toast.success("Success");
           setData(response.data);
           setOpen2(true);
-        } else if (status == 404) {
-          console.log(response.data.message)
+        } else {
+          console.log(response.data.error)
           console.log('unsu')
           setLoading(false);
           toast.error(
@@ -77,7 +77,7 @@ const ForgotPass = () => {
         }
         console.log(status)
       } catch (error) {
-        console.error("Error forgetting password:", error);
+        console.error("Error forgetting password:", error.response.data.error);
       }
     }
   };
