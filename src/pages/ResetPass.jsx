@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ForgotPassLayout from "../components/auth/ForgotPassLayout.jsx";
 import UpdatePasswordInput from "../components/auth/UpdatePasswordInput.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SuccessModal from "../components/modals/SuccessModal";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ResetPass = () => {
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: "",
   });
+
+  const location = useLocation();
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const tokenParam = queryParams.get("token");
+    setToken(tokenParam);
+  }, [location]);
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -35,12 +44,12 @@ const ResetPass = () => {
       setLoading(true);
       // setOpen2(true); //to remove
       const params = {
-        process: "tp_reset_password",
-        password: formData.password,
+        password: formData.confirmPassword,
+        token: token,
       };
       try {
         const response = await axios.post(
-          "https://safetra-crz3.onrender.com/api/user/reset-password",
+         `https://safetra-be.onrender.com/api/user/reset-password/${token}`,
           JSON.stringify(params),
           {
             headers: {
@@ -52,9 +61,10 @@ const ResetPass = () => {
         if (status) {
           setLoading(false);
           toast.success("Success");
-          setData(response.data);
+          // setData(response.data);
           setOpen2(true);
         } else {
+          console.log(response.data.error)
           setLoading(false);
           toast.error(
             "Unsuccessful! Email not registered, use a valid email or register"
@@ -62,7 +72,7 @@ const ResetPass = () => {
         }
         console.log(status)
       } catch (error) {
-        console.error("Error forgetting password:", error);
+        console.error("Error forgetting password:", error.response.data.error);
       }
     }
   };
