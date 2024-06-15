@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SuccessModal from "../components/modals/SuccessModal";
 import { Link } from "react-router-dom";
+
 const ForgotPass = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -96,7 +97,7 @@ const ForgotPass = () => {
       desc="Enter your email address and we’ll send you a link to reset your password"
       
     >
-      <div className="w-full px-6 md:px-12 font-inter">
+      <div className="w-full font-inter">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mb-[5rem]">
           <AuthInput
             id="email"
