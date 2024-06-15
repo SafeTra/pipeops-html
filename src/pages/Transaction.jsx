@@ -41,11 +41,7 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
-<<<<<<< HEAD
     <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
-=======
-    <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
->>>>>>> 73aa1308fd3fe43035235454f1e8f873f8e89fb6
       <div className="flex justify-between">
         <Link
           to="/user/transaction"
