@@ -95,7 +95,7 @@ section, footer, .login, .forgotPass, .authenticate, .verify{padding-block: 3rem
 .footer_logo{align-self: center;}
 footer .nav_item + .nav_item{margin-top: .5rem;}
 footer .nav_link:hover, #services a:hover{text-decoration: underline;}
-.btn, .verify input{border: 1px solid var(--clr-orange)}
+.verify input{border: 1px solid var(--clr-orange)}
 
 @media screen and (max-width: 979px){
   nav.d-flex > .d-flex{width: 100%;}
