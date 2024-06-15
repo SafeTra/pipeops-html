@@ -69,7 +69,7 @@ const SideBar = () => {
             className={`flex items-center ${arrowDirection ? 'justify-center mb-6' : 'mb-8 px-6'} cursor-pointer hover:text-orange-500 transition-transform transform duration-500`}
             onClick={() => handleItemClick(index)}
           >
-            <NavLink to={`/user/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
+            <NavLink to={`/admin/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
               {item.icon}
               {!arrowDirection && (
                 <span className="text-base ml-2">{item.label}</span>
@@ -84,9 +84,9 @@ const SideBar = () => {
 
 export const TopBar = () => {
   return (
-    <div className="flex flex-row space-x-6 px-16 py-5 text-4xl text-slate-700 justify-end">
-      <IoMdNotificationsOutline className="text-xl lg:text-2xl"/>
-      <FaUserAlt className="text-xl lg:text-2xl"/>
+    <div className="flex bg-orange-400 flex-row space-x-6 px-16 py-5 text-4xl text-slate-700 justify-end">
+      <IoMdNotificationsOutline className="text-xl lg:text-2xl text-white"/>
+      <FaUserAlt className="text-xl lg:text-2xl text-white"/>
     </div>
   );
 };
