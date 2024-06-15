@@ -48,7 +48,7 @@ const ForgotPass = () => {
       };
       try {
         const response = await axios.post(
-          "https://safetra-crz3.onrender.com/api/user/forgot-password-token",
+          "https://safetra-be.onrender.com/api/user/forgot-password-token",
           JSON.stringify(params),
           {
             headers: {
@@ -57,7 +57,7 @@ const ForgotPass = () => {
             
           } 
         );
-        console.log(response.data.message)
+      
         console.log("we reach heere");
         console.log(response)
         const status = response.status;
@@ -67,8 +67,9 @@ const ForgotPass = () => {
           toast.success("Success");
           setData(response.data);
           setOpen2(true);
-        } else {
+        } else if (status == 404) {
           console.log(response.data.message)
+          console.log('unsu')
           setLoading(false);
           toast.error(
             "Unsuccessful! Email not registered, use a valid email or register"
