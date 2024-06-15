@@ -15,10 +15,12 @@ import Dashboard from './pages/Dashboard';
 import ForgotPass from './pages/ForgotPass';
 import ResetPass from './pages/ResetPass';
 import Container from './components/Container';
+import Loader from './components/Loader/Loader';
 import ApiHandler from './data/ApiHandler';
 import Disputes from './pages/Disputes';
 import Payments from './pages/Payments';
 import Transaction from './pages/Transaction';
+import ConfirmEmail from './pages/ConfirmEmail';
 import NewTransaction from './pages/NewTransaction';
 import Integration from './pages/Integration';
 import DashboardContainer from './components/DashboardContainer';
@@ -33,6 +35,7 @@ export {
 	Header,
 	Footer,
 	Logout,
+	Loader,
 	Pricing,
 	Settings,
 	Contact,
@@ -47,5 +50,6 @@ export {
 	NewTransaction,
 	Transaction,
 	Integration,
+	ConfirmEmail,
 	DashboardContainer,
 };

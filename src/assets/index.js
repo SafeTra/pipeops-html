@@ -11,12 +11,14 @@ import icon_close from './icons/icon-close.svg'
 import arrow_left from './icons/arrow_left.svg'
 import icon_close_regular from './icons/icon-close-regular.svg'
 import success from './icons/success.svg'
+import warning from './icons/warning.svg'
 import close_png from './images/close.png'
 import  emptyUserDash from './icons/emptyUserDash.svg'
 
 export {
     logo,
     error,
+    warning,
     icon_menu,
     icon_close,
     arrow_left,
@@ -29,8 +31,8 @@ export {
 }
 
 export const socialIcons = [
-    {img: instagram, alt: 'instagram'}, 
-    {img: facebook, alt: 'facebook'}, 
-    {img: twitter, alt: 'twitter'}, 
+    {img: instagram, alt: 'instagram'},
+    {img: facebook, alt: 'facebook'},
+    {img: twitter, alt: 'twitter'},
     {img: linkedin, alt: 'linkedin'}
 ]

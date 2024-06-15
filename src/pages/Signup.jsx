@@ -110,9 +110,6 @@ const Signup = () => {
           <p>A verification email has been sent to {email} </p>
           <p>Please verify your email to have access to our platform</p>
         </div>
-        <button className="btn btn-form w-3/4 lg:w-1/2" onClick={() => { setOpenSuccessModal(false); window.location.href = 'mailto:' + email; }}>
-          Go to Email
-        </button>
       </SuccessModal>
     </div>
   );
