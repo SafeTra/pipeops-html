@@ -80,7 +80,7 @@ const SideBar = () => {
 
 export const TopBar = () => {
   return (
-    <div className="bg-orange-500 flex flex-row space-x-12 px-16 py-8 text-4xl text-slate-700 justify-end">
+    <div className="flex flex-row space-x-12 px-16 py-8 text-4xl text-slate-700 justify-end">
       <IoMdNotificationsOutline />
       <FaUserAlt />
     </div>
