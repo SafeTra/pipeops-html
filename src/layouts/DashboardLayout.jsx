@@ -105,7 +105,7 @@ const DashboardLayout = () => {
       <div className="border-b border-gray-200">
         <TopBar />
       </div>
-      <div className="overflow-y-auto">
+      <div className="overflow-y-auto bg-[#F0F3F8]">
         <MiddleContent />
       </div>
     </div>
