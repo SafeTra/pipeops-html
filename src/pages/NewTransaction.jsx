@@ -2,11 +2,13 @@ import { Container, Input } from "..";
 import { useEffect, useState } from "react";
 import { arrow_left } from "../assets";
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 const NewTransaction = () => {
   const [payPercent, setPayPercent] = useState(0);
+  const [transactionComplete, setTransactionComplete] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
-    title: '', profile: '', currency: '', period: '', itemName: '', price: '', category: '', seller: false, buyer: false,
+    title: '', profile: '', currency: '', period: '', itemName: '', price: '', category: '',
     description: '', shippingMethod: '', shippingFeeBy: '', shippingCost: '', paymentBy: '',
   });
 
@@ -30,16 +32,39 @@ const NewTransaction = () => {
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
+
+    /* ['profile', 'shippingFeeBy', 'paymentBy'] */
+    setTransactionComplete(Object.values(newTransaction).every(value => value !== '' && value !== false));
+
+    try {
+      if (transactionComplete){
+      }
+      else {
+        if (!newTransaction.title) toast.error('Please fill the transaction title field')
+        else if (!newTransaction.profile) toast.error('Please select your profile')
+        else if (!newTransaction.currency) toast.error('Please select a currency')
+        else if (!newTransaction.period) toast.error('Please fill the Inspecified period field')
+        else if (!newTransaction.itemName) toast.error('Please fill the Item name field')
+        else if (!newTransaction.price) toast.error('Please fill the price field')
+        else if (!newTransaction.category) toast.error('Please categorize the objet in transaction')
+        else if (!newTransaction.description) toast.error('Please briefly describe the objet in transaction')
+        else if (!newTransaction.shippingMethod) toast.error('Please fill the Shopping method field')
+        else if (!newTransaction.shippingFeeBy) toast.error('Please select who pays shipping fee')
+        else if (!newTransaction.shippingCost) toast.error('Please fill the Shipping cost field')
+      }
+    } catch (error) {
+      console.log('Error during transaction creation: ', error)
+    }
+
     console.log(newTransaction);
   };
 
   return (
-    <Container className="pt-8 bg-[#F0F3F8]">
-      <h1 className="text-lg lg:text-xl font-medium pb-5">Start Transaction</h1>
-      <div className="bg-white w-full p-8 pb-16 lg:flex items-start">
-        <div className="rounded-full inline-block shadow-md bg-white py-4 px-3">
-          <Link to='/dashboard'><img src={arrow_left} alt="Prev Page" /></Link>
-        </div>
+    <Container className="md:pt-8 bg-[#F0F3F8] max-md:px-0">
+      <h1 className="text-lg lg:text-xl font-medium pb-5 max-md:hidden">Start Transaction</h1>
+      <div className="bg-white w-full p-8 lg:pb-16 lg:flex items-start max-md:bg-[#fdfdfd]">
+        <h1 className="text-lg lg:text-xl font-medium pb-5 md:hidden">Start Transaction</h1>
+        <Link className="rounded-full inline-block shadow-md bg-white py-4 px-3" to='/user/transaction'><img src={arrow_left} alt="Prev Page" /></Link>
         <div className="lg:w-2/3 mx-auto">
           <form onSubmit={handleNewTransaction}>
             <hr className='mt-6' />
@@ -47,7 +72,8 @@ const NewTransaction = () => {
             <div className="md:flex w-full gap-6">
               <div className="flex *:w-full md:w-2/3 gap-6">
                 <div className="form p-0">
-                  <select name="profile" value={newTransaction.profile} onChange={handleInputChange} className="form__input w-full">
+                  <select  name="profile" value={newTransaction.profile} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.profile && 'text-gray-700'}`}>
+                    <option value="">Select</option>
                     <option value="Buyer">Buyer</option>
                     <option value="Seller">Seller</option>
                   </select>
@@ -70,7 +96,8 @@ const NewTransaction = () => {
               <div className="flex *:w-full md:w-2/3 gap-6">
                 <Input name='shippingMethod' value={newTransaction.shippingMethod} onChange={handleInputChange} type='text' label='Shipping method' />
                 <div className="form p-0">
-                  <select name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className="form__input w-full">
+                  <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-700'}`}>
+                    <option value="">Select</option>
                     <option value="Buyer">Buyer</option>
                     <option value="Seller">Seller</option>
                   </select>
@@ -114,6 +141,7 @@ const NewTransaction = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </Container>
   );
 }

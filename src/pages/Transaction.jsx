@@ -41,10 +41,11 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
-    <Container className="pt-8 bg-[#F0F3F8]">
-      <h1 className="text-lg lg:text-xl font-medium pb-5">My Transactions</h1>
-      <div className="space-y-4 bg-white">
-        <div className="flex justify-between px-6">
+    <Container className="md:pt-8 bg-[#F0F3F8] max-md:px-0">
+      <h1 className="text-lg lg:text-xl font-medium pb-5 max-md:hidden">My Transaction</h1>
+      <div className="bg-white p-8 lg:pb-16">
+        <h1 className="text-lg lg:text-xl font-medium pb-5 md:hidden">Start Transaction</h1>
+        <div className="flex justify-between">
           <Link
             to="/user/transaction"
             className="flex justify-center items-center"
