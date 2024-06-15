@@ -41,13 +41,17 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
+<<<<<<< HEAD
     <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
+=======
+    <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
+>>>>>>> 73aa1308fd3fe43035235454f1e8f873f8e89fb6
       <div className="flex justify-between">
         <Link
           to="/user/transaction"
           className="flex justify-center items-center"
         >
-          <div className="rounded-full inline-block shadow-md bg-white py-4 px-3">
+          <div className="rounded-full inline-block shadow-md py-4 px-3">
             <img src={arrow_left} alt="Prev Page" />
           </div>
         </Link>
