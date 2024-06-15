@@ -1,6 +1,6 @@
 import { Box, CircularProgress, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { Container, DashboardContainer } from "..";
+import { DashboardContainer } from "..";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { arrow_left, emptyUserDash } from '../assets';
@@ -41,11 +41,7 @@ const Transaction = () => {
 	}, [table]);
 
 	return (
-<<<<<<< HEAD
     <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
-=======
-    <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
->>>>>>> 73aa1308fd3fe43035235454f1e8f873f8e89fb6
       <div className="flex justify-between">
         <Link
           to="/user/transaction"
