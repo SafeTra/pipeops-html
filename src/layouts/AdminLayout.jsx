@@ -8,8 +8,9 @@ import { FaUsers, FaEnvelopeOpenText, FaUserAlt } from "react-icons/fa";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoSettingsSharp, IoExitOutline } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { brand_logo } from "../assets";
 
 const SideBar = () => {
   const [arrowDirection, setArrowDirection] = useState(true);
@@ -23,54 +24,57 @@ const SideBar = () => {
     setActiveItem(index);
   };
 
+  const navLink = `flex items-center w-full  ${arrowDirection ? 'justify-center' : ''}`
+
   const menuItems = [
-    { icon: <AiFillDashboard />, label: "Dashboard" },
-    { icon: <FaUsers />, label: "Users" },
-    { icon: <FaEnvelopeOpenText />, label: "Messages" },
-    { icon: <RiMoneyDollarCircleFill />, label: "Pricing" },
-    { icon: <IoSettingsSharp />, label: "Settings" },
-    { icon: <IoExitOutline />, label: "Logout" },
+    { icon: <AiFillDashboard className="text-xl lg:text-2xl" />, label: "Dashboard" },
+    { icon: <FaUsers className="text-xl lg:text-2xl" />, label: "Users" },
+    { icon: <FaEnvelopeOpenText className="text-xl lg:text-2xl" />, label: "Messages" },
+    { icon: <RiMoneyDollarCircleFill className="text-xl lg:text-2xl" />, label: "Pricing" },
+    { icon: <IoSettingsSharp className="text-xl lg:text-2xl" />, label: "Settings" },
+    { icon: <IoExitOutline className="text-xl lg:text-2xl" />, label: "Logout" },
   ];
 
   return (
-    <nav className="flex flex-col items-center text-4xl text-slate-700 py-3 px-6">
-      <ul className="w-full">
-        <li className="mb-12 flex items-center justify-center">
+    <nav className="flex flex-col items-center text-4xl text-slate-700 py-3">
+      <ul className="w-full transition-all">
           {arrowDirection ? (
-            <MdOutlineKeyboardDoubleArrowRight
-              className="text-slate-700 text-6xl rounded-full cursor-pointer shadow-sm shadow-slate-400"
-              onClick={toggleArrow}
-            />
+            <li className={`mb-6 flex flex-col gap-6 items-center justify-center px-6`}>
+              <img src={brand_logo} alt="SafeTra Logo" />
+              <MdOutlineKeyboardDoubleArrowRight
+                className="text-slate-700 text-3xl rounded-full cursor-pointer shadow-sm shadow-slate-400"
+                onClick={toggleArrow}
+              />
+            </li>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="mb-10 flex items-center gap-6 justify-between px-6">
               {!arrowDirection && (
                 <span
                   className={`text-base ml-2 transition-opacity duration-500 ${
                     !arrowDirection ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  SafeTra
+                  <img src={brand_logo} alt="SafeTra Logo" />
                 </span>
               )}
               <MdOutlineKeyboardDoubleArrowLeft
-                className="text-slate-700 text-6xl rounded-full cursor-pointer shadow-sm shadow-slate-              400"
+                className="text-slate-700 text-3xl rounded-full cursor-pointer shadow-md shadow-slate-400"
                 onClick={toggleArrow}
               />
             </div>
           )}
-        </li>
         {menuItems.map((item, index) => (
           <li
             key={index}
-            className={`mb-8 flex items-center cursor-pointer hover:text-orange-500 transition-transform transform duration-500 border border-gray-300 rounded-lg p-2`}
+            className={`flex items-center ${arrowDirection ? 'justify-center mb-6' : 'mb-8 px-6'} cursor-pointer hover:text-orange-500 transition-transform transform duration-500`}
             onClick={() => handleItemClick(index)}
           >
-            <Link to={`/admin/${item.label}`} className="flex items-center">
+            <NavLink to={`/user/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
               {item.icon}
               {!arrowDirection && (
                 <span className="text-base ml-2">{item.label}</span>
               )}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>
@@ -80,9 +84,9 @@ const SideBar = () => {
 
 export const TopBar = () => {
   return (
-    <div className="bg-orange-500 flex flex-row space-x-12 px-16 py-8 text-4xl text-slate-700 justify-end">
-      <IoMdNotificationsOutline />
-      <FaUserAlt />
+    <div className="flex flex-row space-x-6 px-16 py-5 text-4xl text-slate-700 justify-end">
+      <IoMdNotificationsOutline className="text-xl lg:text-2xl"/>
+      <FaUserAlt className="text-xl lg:text-2xl"/>
     </div>
   );
 };
