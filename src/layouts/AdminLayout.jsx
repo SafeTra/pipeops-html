@@ -39,7 +39,7 @@ const SideBar = () => {
     <nav className="flex flex-col items-center text-4xl text-slate-700 py-3">
       <ul className="w-full transition-all">
           {arrowDirection ? (
-            <li className={`mb-6 flex flex-col gap-6 items-center justify-center px-6`}>
+            <li className={`mb-6 flex flex-col gap-6 items-center justify-center px-4 md:px-6`}>
               <img src={brand_logo} alt="SafeTra Logo" />
               <MdOutlineKeyboardDoubleArrowRight
                 className="text-slate-700 text-3xl rounded-full cursor-pointer shadow-sm shadow-slate-400"
@@ -47,7 +47,7 @@ const SideBar = () => {
               />
             </li>
           ) : (
-            <div className="mb-10 flex items-center gap-6 justify-between px-6">
+            <div className="mb-10 flex items-center gap-6 justify-between px-4 md:px-6">
               {!arrowDirection && (
                 <span
                   className={`text-base ml-2 transition-opacity duration-500 ${
@@ -66,7 +66,7 @@ const SideBar = () => {
         {menuItems.map((item, index) => (
           <li
             key={index}
-            className={`flex items-center ${arrowDirection ? 'justify-center mb-6' : 'mb-8 px-6'} cursor-pointer hover:text-orange-500 transition-transform transform duration-500`}
+            className={`flex items-center ${arrowDirection ? 'justify-center mb-6' : 'mb-8 px-4 md:px-6'} cursor-pointer hover:text-orange-500 transition-transform transform duration-500`}
             onClick={() => handleItemClick(index)}
           >
             <NavLink to={`/admin/${item.label}`} className={({isActive}) => isActive ? `text-orange-500 ${navLink}` : `${navLink}`}>
