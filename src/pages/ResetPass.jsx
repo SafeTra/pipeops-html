@@ -49,7 +49,7 @@ const ResetPass = () => {
       };
       try {
         const response = await axios.post(
-         `https://safetra-be.onrender.com/api/user/reset-password/${token}`,
+         `https://safetra-be.onrender.com/api/v1/auth/reset-password/${token}`,
           JSON.stringify(params),
           {
             headers: {
