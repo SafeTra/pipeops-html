@@ -141,8 +141,14 @@ pending page
           ) : (
             ''
           )}
-
-
+          
+{table == 'Completed' ? (
+            <div className="flex justify-center flex-col items-center py-4 ">
+completed page
+            </div>
+          ) : (
+            ''
+          )}
           
           {loading ? (
             <Box
