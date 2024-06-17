@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ForgotPassLayout from "../components/auth/ForgotPassLayout.jsx";
 import UpdatePasswordInput from "../components/auth/UpdatePasswordInput.jsx";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import SuccessModal from "../components/modals/SuccessModal";
 import { Link, useLocation } from "react-router-dom";
 
@@ -49,7 +49,7 @@ const ResetPass = () => {
       };
       try {
         const response = await axios.post(
-         `https://safetra-be.onrender.com/api/user/reset-password/${token}`,
+         `https://safetra-be.onrender.com/api/v1/auth/reset-password/${token}`,
           JSON.stringify(params),
           {
             headers: {
@@ -64,7 +64,9 @@ const ResetPass = () => {
           // setData(response.data);
           setOpen2(true);
         } else {
-          console.log(response.data.error)
+          toast.error(
+            "Unsuccessful! Password not Updated"
+          );
           setLoading(false);
           toast.error(
             "Unsuccessful! Email not registered, use a valid email or register"
@@ -73,6 +75,9 @@ const ResetPass = () => {
         console.log(status)
       } catch (error) {
         console.error("Error forgetting password:", error.response.data.error);
+        toast.error(
+          "Unsuccessful! Password not updated"
+        );
       }
     }
   };
@@ -128,6 +133,7 @@ const ResetPass = () => {
             className="btn btn-form"
             value={loading ? "Reseting..." : "Reset Password"}
           />
+           <ToastContainer />
         </form>
       </div>
       <SuccessModal open={open2} onClose={handleClose2}>
