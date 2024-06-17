@@ -13,13 +13,24 @@ const ConfirmEmail = () => {
 	const token = url.get('token');
 	const username = url.get('username');
 
+	const getNewToken = async (username) => {
+		await fetch(
+			`https://safetra-be.onrender.com/api/v1/user/send-email-verification`,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ username }),
+			}
+		);
+	}
+
 	useEffect(() => {
 		navigate('/confirm-email');
 		const verifyUser = async () => {
 			try {
 				if (token) {
 					const response = await fetch(
-						`https://safetra-be.onrender.com/api/user/verify-email`,
+						`https://safetra-be.onrender.com/api/v1/user/verify-email`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -27,24 +38,11 @@ const ConfirmEmail = () => {
 						}
 					);
 
-					if (response.status === 200) {
-						setLoading(false);
-						setBtnText('verified');
-					} else if (response.status === 400) {
-						await fetch(
-							`https://safetra-be.onrender.com/api/user/send-email-verification`,
-							{
-								method: 'POST',
-								headers: { 'Content-Type': 'application/json' },
-								body: JSON.stringify({ username }),
-							}
-						);
-						setLoading(false);
-						setBtnText('resend');
-					} else {
-						setLoading(false);
-						setBtnText('invalid');
-					}
+					setLoading(false);
+
+					if (response.status === 200) setBtnText('verified');
+					else if (response.status === 400) setBtnText('resend');
+					else setBtnText('invalid');
 				}
 			} catch (error) {
 				console.log('Error during email confirmation', error);
@@ -94,6 +92,7 @@ const ConfirmEmail = () => {
 									token has been generated. Please check your
 									mail to verify your email. Thank you.
 								</p>
+								<button onClick={() => getNewToken(username)}></button>
 							</>
 						)}
 						{btnText === 'invalid' && (
@@ -107,7 +106,7 @@ const ConfirmEmail = () => {
 									alt="Warning Icon"
 								/>
 								<p className="lg:text-lg text-base py-6">
-									The token you provided isn't correct. <br />{' '}
+									The token you provided is not correct. <br />
 									Make sure you have the right token.
 								</p>
 							</>

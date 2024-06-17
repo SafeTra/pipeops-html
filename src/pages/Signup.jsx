@@ -37,10 +37,11 @@ const Signup = () => {
 
     try {
       if (isStrongPass && checkboxRef.current.checked) {
-        const response = await fetch(`https://safetra-be.onrender.com/api/user/register`, {
+        const response = await fetch(`https://safetra-be.onrender.com/api/v1/users/register`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, username, password })
         });
+        console.log(response);
 
         if (response.status === 409) {
           toast.error("User already exists");
@@ -59,7 +60,7 @@ const Signup = () => {
         else if (!isEmail(email)) toast.error("Invalid email address");
         else if (!isEightChars) toast.error("Password must be at least 8 characters");
         else if (!isCapitalise) toast.error("Password must contain at least one UPPERCASE and one LOWERCASE character");
-        else if (!isNumAndSpecial) toast.error("Password must contain at least one number or special character");
+        else if (!isNumAndSpecial) toast.error("Password must contain at least one number and special character");
         else if (!checkboxRef.current.checked) toast.error("Please agree to the Terms and Conditions");
       }
     } catch (error) {

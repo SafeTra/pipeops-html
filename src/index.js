@@ -23,6 +23,9 @@ import Transaction from './pages/Transaction';
 import ConfirmEmail from './pages/ConfirmEmail';
 import NewTransaction from './pages/NewTransaction';
 import Integration from './pages/Integration';
+import ItemCategory from './components/ItemCategory';
+import ReviewTransaction from './pages/ReviewTransaction';
+import TransactionDetails from './components/TransactionDetails';
 import DashboardContainer from './components/DashboardContainer';
 
 export {
@@ -52,4 +55,7 @@ export {
 	Integration,
 	ConfirmEmail,
 	DashboardContainer,
+	ItemCategory,
+	TransactionDetails,
+	ReviewTransaction,
 };
