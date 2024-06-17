@@ -39,7 +39,7 @@ const Header = () => {
             </ul>
             <ul className={`nav_list d-flex ${menu ? 'disable' : ''}`}>                            
               <li className='nav_item'><Link to='/login' className='btn btn-outline'>Sign In</Link></li>
-              <li className='nav_item'><Link to='/signup' className='btn btn-primary'>Join for Free</Link></li>
+              <li className='nav_item'><Link to='/signup' className='btn btn-primary'>Join SafeTra</Link></li>
             </ul>
           </nav>
         </div>

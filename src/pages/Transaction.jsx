@@ -42,7 +42,7 @@ const Transaction = () => {
 
 	return (
     <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
-      <div className="flex justify-between">
+      <div className="flex justify-between max-sm:flex-col">
         <Link
           to="/user/transaction"
           className="flex justify-center items-center"
@@ -52,7 +52,7 @@ const Transaction = () => {
           </div>
         </Link>
 
-        <Link to="/user/newtransaction" className="w-[16%] h-[20%] ">
+        <Link to="/user/newtransaction" className="h-[20%] ">
           <button className="btn btn-form">New Transaction</button>
         </Link>
       </div>
