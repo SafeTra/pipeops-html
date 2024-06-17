@@ -31,11 +31,22 @@ const NewTransaction = () => {
   const handleNewTransaction = async (e) => {
     e.preventDefault();
 
-    /* ['profile', 'shippingFeeBy', 'paymentBy'] */
     setTransactionComplete(Object.values(newTransaction).every(value => value !== '' && value !== false));
 
     try {
       if (transactionComplete){
+        const response = await fetch(
+          `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...newTransaction }),
+          }
+        );
+        console.log({...newTransaction})
+
+        const data =  response.json();
+        console.log(data)
       }
       else {
         if (!newTransaction.title) toast.error('Please fill the transaction title field')
@@ -63,7 +74,7 @@ const NewTransaction = () => {
         <hr className='mt-6' />
         <Input name='title' value={newTransaction.title} onChange={handleInputChange} type='text' label='Transaction Title' />
         <div className="md:flex w-full gap-6">
-          <div className="flex *:w-full md:w-2/3 gap-6">
+          <div className="flex max-md:flex-col *:w-full md:w-2/3 md:gap-6">
             <div className="form p-0">
               <select  name="profile" value={newTransaction.profile} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.profile && 'text-gray-700'}`}>
                 <option value="">Select</option>
@@ -77,7 +88,7 @@ const NewTransaction = () => {
           <Input className="md:w-1/3" name='period' value={newTransaction.period} onChange={handleInputChange} type='text' label='Inspection period (days)' />
         </div>
         <h2 className="lg:text-lg text-base mt-6">Transaction details</h2>
-        <div className="flex *:w-full gap-6">
+        <div className="flex *:w-full md:gap-6  max-md:flex-col">
           <Input name='itemName' value={newTransaction.itemName} onChange={handleInputChange} type='text' label='Item name' />
           <Input name='price' value={newTransaction.price} onChange={handleInputChange} type='text' label='Price' />
         </div>
@@ -86,7 +97,7 @@ const NewTransaction = () => {
           <Input name='description' value={newTransaction.description} onChange={handleInputChange} type='text' label='Item description' />
         </div>
         <div className="md:flex w-full gap-6">
-          <div className="flex *:w-full md:w-2/3 gap-6">
+          <div className="flex *:w-full md:w-2/3 md:gap-6  max-md:flex-col">
             <Input name='shippingMethod' value={newTransaction.shippingMethod} onChange={handleInputChange} type='text' label='Shipping method' />
             <div className="form p-0">
               <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-700'}`}>
@@ -128,7 +139,7 @@ const NewTransaction = () => {
                 <span className="rounded-e-lg border px-5">{payPercent}</span>
               </div>
             </div>
-            <button type="submit" className="btn btn-form m-0 py-3 px-5 lg:w-1/6">Add Item</button>
+            <button type="submit" className="btn btn-form m-0 py-3 md:w-1/3 max-sm:my-6 px-5 lg:w-1/4">Add Item</button>
           </div>
         </div>
       </form>

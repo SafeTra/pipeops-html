@@ -14,6 +14,7 @@ const ConfirmEmail = () => {
 	const username = url.get('username');
 
 	const getNewToken = async (username) => {
+		if (!username) return;
 		await fetch(
 			`https://safetra-be.onrender.com/api/v1/auth/send-email-verification`,
 			{
@@ -22,10 +23,9 @@ const ConfirmEmail = () => {
 				body: JSON.stringify({ username }),
 			}
 		);
-	}
+	};
 
 	useEffect(() => {
-		navigate('/confirm-email');
 		const verifyUser = async () => {
 			try {
 				if (token) {
@@ -37,7 +37,6 @@ const ConfirmEmail = () => {
 							body: JSON.stringify({ token }),
 						}
 					);
-					console.log(await response.json());
 
 					setLoading(false);
 
@@ -51,7 +50,8 @@ const ConfirmEmail = () => {
 		};
 
 		verifyUser();
-	}, [token]);
+		navigate('/confirm-email', { replace: true });
+	}, [url, token, navigate]);
 
 	return !loading ? (
 		<div className="bubbles_bg">
@@ -72,13 +72,9 @@ const ConfirmEmail = () => {
 									alt="Success Icon"
 								/>
 								<p className="lg:text-lg text-base">
-									You have successfully verified your email
-									address
+									You have successfully verified your email address
 								</p>
-								<Link
-									to="/login"
-									className="btn btn-form w-3/4 lg:w-1/2 mt-8"
-								>
+								<Link to="/login" className="btn btn-form w-3/4 lg:w-1/2 mt-8">
 									Login to proceed
 								</Link>
 							</>
@@ -91,7 +87,7 @@ const ConfirmEmail = () => {
 								<p className="lg:text-lg text-base py-4">
 									The token you provided has expired as it has been more than 10 minutes you got the mail. Please click the link below to generate a new token to get you registered as the token you provided has expired. Thank you.
 								</p>
-								<button onClick={() => getNewToken(username)}>Click here to </button>
+								<button onClick={() => getNewToken(username)}>Click here to get a new token</button>
 							</>
 						)}
 						{btnText === 'invalid' && (
