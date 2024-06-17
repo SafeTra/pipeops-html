@@ -133,6 +133,17 @@ const Transaction = () => {
           ) : (
             ''
           )}
+
+{table == 'Pending' ? (
+            <div className="flex justify-center flex-col items-center py-4 ">
+pending page
+            </div>
+          ) : (
+            ''
+          )}
+
+
+          
           {loading ? (
             <Box
               sx={{
