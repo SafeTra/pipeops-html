@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { arrow_left, emptyUserDash } from '../assets';
 
-const url = 'https://safetra-crz3.onrender.com/api/user/transaction';
+const url = 'https://safetra-crz3.onrender.com/api/v1/transactions';
 
 const Transaction = () => {
 	const [table, setTable] = useState('Action Required');
@@ -126,6 +126,13 @@ const Transaction = () => {
             ''
           )}
 
+ {table == 'All' ? (
+            <div className="flex justify-center flex-col items-center py-4 ">
+
+            </div>
+          ) : (
+            ''
+          )}
           {loading ? (
             <Box
               sx={{
