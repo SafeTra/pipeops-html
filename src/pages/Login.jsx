@@ -22,7 +22,7 @@ const Login = () => {
 
         try {
           if (password.length >= 8 && isEmail(email)) {
-            const response = await fetch(`https://safetra-be.onrender.com/api/user/login`, {
+            const response = await fetch(`https://safetra-be.onrender.com/api/v1/auth/login`, {
               method: 'POST', headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({email, password})
             })
