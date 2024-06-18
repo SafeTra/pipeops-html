@@ -13,7 +13,7 @@ const NewTransaction = () => {
     title: '', profile: '', currency: '', party: '', period: '', itemName: '', price: 0, category: '', seller: false,
     description: '', shippingFeeBy: '', shippingCost: 0, paymentBy: '', buyer: false,
   });
-
+  const token = localStorage.getItem('token');
   const { dispatch } = TransactionState()
 
   const handleInputChange = (e) => {
@@ -40,19 +40,17 @@ const NewTransaction = () => {
     setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
 
     try {
-      console.log(transactionComplete, {...newTransaction})
       if (transactionComplete){
         const response = await fetch(
           `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
           {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, },
             body: JSON.stringify({ ...newTransaction }),
           }
         );
 
         if (!response.ok) throw new Error
-        console.log('Transaction complete')
         dispatch({type: 'ADD_TRANSACTION', payload: {...newTransaction}})
 
         toast.success('Transaction created successfully')
