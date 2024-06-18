@@ -2,7 +2,7 @@ import { useState } from "react";
 import ForgotPassLayout from "../components/auth/ForgotPassLayout.jsx";
 import AuthInput from "../components/auth/AuthInput.jsx";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import SuccessModal from "../components/modals/SuccessModal";
 import { Link } from "react-router-dom";
 
@@ -48,7 +48,7 @@ const ForgotPass = () => {
       };
       try {
         const response = await axios.post(
-          "https://safetra-crz3.onrender.com/api/user/forgot-password-token",
+          "https://safetra-be.onrender.com/api/v1/auth/forgot-password-token",
           JSON.stringify(params),
           {
             headers: {
@@ -57,9 +57,9 @@ const ForgotPass = () => {
             
           } 
         );
-        console.log(response.data.message)
+      
         console.log("we reach heere");
-        console.log(response)
+      
         const status = response.status;
         if (status) {
           
@@ -68,15 +68,19 @@ const ForgotPass = () => {
           setData(response.data);
           setOpen2(true);
         } else {
-          console.log(response.data.message)
-          setLoading(false);
+          
           toast.error(
             "Unsuccessful! Email not registered, use a valid email or register"
           );
+          setLoading(false);
         }
         console.log(status)
       } catch (error) {
-        console.error("Error forgetting password:", error);
+        toast.error(
+          "Unsuccessful! Email not registered, use a valid email or register", error.response.data.error
+        );
+        console.error("Error forgetting password:", error.response.data.error);
+        setLoading(false)
       }
     }
   };
@@ -115,6 +119,7 @@ const ForgotPass = () => {
             className="btn btn-form"
            value={loading ? "Sending..." : "Send email"}
           />
+           <ToastContainer />
         </form>
       </div>
       <SuccessModal open={open2} onClose={handleClose2}>
