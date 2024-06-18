@@ -129,9 +129,14 @@ const Transaction = () => {
           ) : (
             <div>
               {data.map((transaction, index) => (
-                <div key={index} className="transaction-item">
-                  {/* Render transaction details here */}
-                  <p>{transaction}</p> {/* Replace 'detail' with the actual transaction property */}
+                <div key={index} className="transaction-item p-4 border rounded-md mb-4">
+                  <h4 className="font-bold text-lg">{transaction.transaction_title}</h4>
+                  <p><strong>Party:</strong> {transaction.party}</p>
+                  <p><strong>Price:</strong> {transaction.price} {transaction.currency}</p>
+                  <p><strong>Status:</strong> {transaction.status}</p>
+                  <p><strong>Description:</strong> {transaction.description}</p>
+                  <p><strong>Initiated At:</strong> {transaction.initiated_at || "N/A"}</p>
+                  <p><strong>Completed At:</strong> {transaction.completed_at || "N/A"}</p>
                 </div>
               ))}
             </div>
