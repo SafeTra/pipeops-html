@@ -24,19 +24,24 @@ const Transaction = () => {
       try {
         setLoading(true); // Set loading to true before making the request
         const endpoint = urlMap[table];
-        const res = await axios.get(`https://safetra-be.onrender.com/api/v1/transactions${endpoint}`, {
+        const url = `https://safetra-be.onrender.com/api/v1/transactions${endpoint}`;
+        
+        console.log(`Fetching data from: ${url}`); // Log the URL
+        
+        const res = await axios.get(url, {
           headers: {
             'Content-Type': 'application/json',
              'Authorization': `Bearer ${token}`,
           },
         });
 
-      console.log("we reached here")
         
         if (res && res.status === 200) {
-          console.log("we reached here")
+          console.log("Data fetched successfully");
           console.log(res.data.message)
           setLoading(false);
+        } else {
+          console.log("Failed to fetch data");
         }
       } catch (err) {
         console.log(err.message);
