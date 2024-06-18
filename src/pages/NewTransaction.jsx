@@ -38,7 +38,7 @@ const NewTransaction = () => {
   const handleNewTransaction = async (e) => {
     e.preventDefault();
 
-    const isComplete = Object.values(newTransaction).every(value => value !== '' && value !== false && value !== 0 && isEmail(newTransaction.party));
+    const isComplete = Object.values(newTransaction).every(value => value !== '' && value !== 0 && isEmail(newTransaction.party));
     setTransactionComplete(isComplete);
 
     if (!isComplete) {
@@ -68,7 +68,7 @@ const NewTransaction = () => {
       );
 
       if (!response.ok) throw new Error('API request failed');
-      
+
       dispatch({ type: 'ADD_TRANSACTION', payload: { ...newTransaction } });
 
       toast.success('Transaction created successfully');
