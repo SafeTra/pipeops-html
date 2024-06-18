@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link,  useSearchParams } from 'react-router-dom';
 import { logo, success, warning } from '../assets';
 import '../App.css';
 import { useEffect, useState } from 'react';
@@ -8,7 +8,6 @@ const ConfirmEmail = () => {
 	const [url] = useSearchParams();
 	const [btnText, setBtnText] = useState('');
 	const [loading, setLoading] = useState(true);
-	const navigate = useNavigate();
 
 	const token = url.get('token');
 	const username = url.get('username');
@@ -50,8 +49,7 @@ const ConfirmEmail = () => {
 		};
 
 		verifyUser();
-		navigate('/confirm-email', { replace: true });
-	}, [url, token, navigate]);
+	}, [token]);
 
 	return !loading ? (
 		<div className="bubbles_bg">
@@ -87,7 +85,7 @@ const ConfirmEmail = () => {
 								<p className="lg:text-lg text-base py-4">
 									The token you provided has expired as it has been more than 10 minutes you got the mail. Please click the link below to generate a new token to get you registered as the token you provided has expired. Thank you.
 								</p>
-								<button onClick={() => getNewToken(username)}>Click here to get a new token</button>
+								<button className='btn btn-form' onClick={() => getNewToken(username)}>Click here to get a new token</button>
 							</>
 						)}
 						{btnText === 'invalid' && (
