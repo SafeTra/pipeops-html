@@ -1,13 +1,15 @@
-import { DashboardContainer, Input } from "..";
+import { CurrencySelect, DashboardContainer, Input } from "..";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const NewTransaction = () => {
+  const navigate = useNavigate();
   const [payPercent, setPayPercent] = useState(0);
   const [transactionComplete, setTransactionComplete] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
-    title: '', profile: '', currency: '', period: '', itemName: '', price: '', category: '',
-    description: '', shippingMethod: '', shippingFeeBy: '', shippingCost: '', paymentBy: '',
+    title: '', profile: '', currency: '', period: '', itemName: '', price: '', category: '', seller: false,
+    description: '', shippingMethod: '', shippingFeeBy: '', shippingCost: '', paymentBy: '', buyer: false,
   });
 
   const handleInputChange = (e) => {
@@ -26,16 +28,18 @@ const NewTransaction = () => {
     } else {
       setPayPercent(0);
     }
+    newTransaction.paymentBy = newTransaction.seller && newTransaction.buyer ? 'Both' : newTransaction.buyer ? 'Buyer' : 'Seller'
   }, [newTransaction.seller, newTransaction.buyer]);
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
 
-    setTransactionComplete(Object.values(newTransaction).every(value => value !== '' && value !== false));
+    setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
 
     try {
       if (transactionComplete){
-        const response = await fetch(
+        console.log('first')
+        await fetch(
           `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
           {
             method: 'POST',
@@ -43,10 +47,9 @@ const NewTransaction = () => {
             body: JSON.stringify({ ...newTransaction }),
           }
         );
-        console.log({...newTransaction})
 
-        const data =  response.json();
-        console.log(data)
+        toast.success('Transaction created successfully')
+        setTimeout(() => navigate('/user/review-transaction'), 2000);
       }
       else {
         if (!newTransaction.title) toast.error('Please fill the transaction title field')
@@ -60,12 +63,11 @@ const NewTransaction = () => {
         else if (!newTransaction.shippingMethod) toast.error('Please fill the Shopping method field')
         else if (!newTransaction.shippingFeeBy) toast.error('Please select who pays shipping fee')
         else if (!newTransaction.shippingCost) toast.error('Please fill the Shipping cost field')
+        else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee')
       }
     } catch (error) {
       console.log('Error during transaction creation: ', error)
     }
-
-    console.log(newTransaction);
   };
 
   return (
@@ -76,14 +78,17 @@ const NewTransaction = () => {
         <div className="md:flex w-full gap-6">
           <div className="flex max-md:flex-col *:w-full md:w-2/3 md:gap-6">
             <div className="form p-0">
-              <select  name="profile" value={newTransaction.profile} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.profile && 'text-gray-700'}`}>
+              <select  name="profile" value={newTransaction.profile} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.profile && 'text-gray-500'}`}>
                 <option value="">Select</option>
                 <option value="Buyer">Buyer</option>
                 <option value="Seller">Seller</option>
               </select>
               <label htmlFor="profile" className="form__label">Profile</label>
             </div>
-            <Input name='currency' value={newTransaction.currency} onChange={handleInputChange} type='text' label='Currency' />
+            <div className="form">
+              <CurrencySelect selectedCurrency={newTransaction.currency} onCurrencyChange={(e) =>  setNewTransaction({ ...newTransaction, currency: e.target.value })} />
+              <label htmlFor="currency" className="form__label">Currency</label>
+            </div>
           </div>
           <Input className="md:w-1/3" name='period' value={newTransaction.period} onChange={handleInputChange} type='text' label='Inspection period (days)' />
         </div>
@@ -100,7 +105,7 @@ const NewTransaction = () => {
           <div className="flex *:w-full md:w-2/3 md:gap-6  max-md:flex-col">
             <Input name='shippingMethod' value={newTransaction.shippingMethod} onChange={handleInputChange} type='text' label='Shipping method' />
             <div className="form p-0">
-              <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-700'}`}>
+              <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-500'}`}>
                 <option value="">Select</option>
                 <option value="Buyer">Buyer</option>
                 <option value="Seller">Seller</option>

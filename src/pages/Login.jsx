@@ -27,12 +27,16 @@ const Login = () => {
               body: JSON.stringify({email, password})
             })
 
-            if (!response.ok) throw new Error
-            const {token} = await response.json()
-            localStorage.setItem('token', token)
+            if (response.status === 403) toast.error("Invalid credentials")
+            else if (response.status === 404) toast.error("User not found.")
 
+            if (!response.ok) throw new Error
+
+            const {token} = await response.json()
+
+            localStorage.setItem('token', token)
             toast.success('Login successfully')
-            setTimeout(() => navigate('/dashboard'), 2000);
+            setTimeout(() => navigate('/user'), 2000);
           }
           else{
             if (!email.trim() || !password.trim()) toast.error('Please fill in all fields correctly.')
@@ -40,7 +44,6 @@ const Login = () => {
             else if (password.length < 8) toast.error("Password is not correct")
           }
         } catch (error) {
-          toast.error("Password is not correct")
           console.error(`Error during login:`, error)
         }
     }

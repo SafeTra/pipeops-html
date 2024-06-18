@@ -27,6 +27,7 @@ import ItemCategory from './components/ItemCategory';
 import ReviewTransaction from './pages/ReviewTransaction';
 import TransactionDetails from './components/TransactionDetails';
 import DashboardContainer from './components/DashboardContainer';
+import CurrencySelect from './components/CurrencySelect';
 
 export {
 	Home,
@@ -58,4 +59,5 @@ export {
 	ItemCategory,
 	TransactionDetails,
 	ReviewTransaction,
+	CurrencySelect,
 };
