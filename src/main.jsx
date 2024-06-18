@@ -6,6 +6,7 @@ import { NotFound, RootLayout, HomeLayout, DashboardLayout, AdminLayout } from '
 import { Home, About, Contact, Dashboard, Pricing, Login, Logout, Messages, Users, Settings, Signup, ForgotPass, ResetPass, Transaction, Integration, Disputes, Payments, NewTransaction, ConfirmEmail, ReviewTransaction, } from '.'
 
 import './index.css'
+import Context from './data/Context'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +48,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Context>
+      <RouterProvider router={router} />
+    </Context>
   </React.StrictMode>,
 )
