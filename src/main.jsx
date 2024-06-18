@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom/client'
 import 'react-toastify/ReactToastify.css'
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
 import { NotFound, RootLayout, HomeLayout, DashboardLayout, AdminLayout } from './layouts'
-import { Home, About, Contact, Dashboard, Pricing, Login, Logout, Messages, Users, Settings, Signup, ForgotPass, ResetPass, Transaction, Integration, Disputes, Payments, NewTransaction, ConfirmEmail, } from '.'
+import { Home, About, Contact, Dashboard, Pricing, Login, Logout, Messages, Users, Settings, Signup, ForgotPass, ResetPass, Transaction, Integration, Disputes, Payments, NewTransaction, ConfirmEmail, ReviewTransaction, } from '.'
 
 import './index.css'
+import Context from './data/Context'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,8 @@ const router = createBrowserRouter(
       <Route path='/user' element={<DashboardLayout />} >
         <Route index element={<Transaction />} />
         <Route path='transaction' element={<Transaction />} />
-        <Route path='newTransaction' element={<NewTransaction />} />
+        <Route path='new-transaction' element={<NewTransaction />} />
+        <Route path='review-transaction' element={<ReviewTransaction />} />
         <Route path="integration" element={<Integration />} />
         <Route path="disputes" element={<Disputes />} />
         <Route path="payments" element={<Payments />} />
@@ -46,6 +48,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Context>
+      <RouterProvider router={router} />
+    </Context>
   </React.StrictMode>,
 )

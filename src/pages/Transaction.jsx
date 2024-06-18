@@ -52,7 +52,7 @@ const Transaction = () => {
           </div>
         </Link>
 
-        <Link to="/user/newtransaction" className="h-[20%]">
+        <Link to="/user/new-transaction" className="h-[20%] ">
           <button className="btn btn-form">New Transaction</button>
         </Link>
       </div>
