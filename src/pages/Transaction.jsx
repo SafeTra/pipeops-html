@@ -7,13 +7,13 @@ import { arrow_left, emptyUserDash } from '../assets';
 
 const urlMap = {
   'All': '/all-transactions',
-  'Action Required': '/ongoing-transactions',
+  'Outgoing': '/ongoing-transactions',
   'Pending': '/pending-transactions',
   'Completed': '/completed-transactions',
 };
 
 const Transaction = () => {
-  const [table, setTable] = useState('Action Required');
+  const [table, setTable] = useState('Outgoing');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
@@ -79,10 +79,10 @@ const Transaction = () => {
           All
         </button>
         <button
-          onClick={() => setTable('Action Required')}
-          className={`text-[#18181B] ${table === 'Action Required' && 'border-b border-b-[#FB923C]'} py-[12px] font-int font-[500] text-[16px] text-[#18181B] px-8`}
+          onClick={() => setTable('Outgoing')}
+          className={`text-[#18181B] ${table === 'Outgoing' && 'border-b border-b-[#FB923C]'} py-[12px] font-int font-[500] text-[16px] text-[#18181B] px-8`}
         >
-          Action Required
+          Outgoing
         </button>
         <button
           onClick={() => setTable('Pending')}
