@@ -2,15 +2,19 @@ import { CurrencySelect, DashboardContainer, Input } from "..";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { TransactionState } from "../data/Context";
+import isEmail from "validator/lib/isEmail";
 
 const NewTransaction = () => {
   const navigate = useNavigate();
   const [payPercent, setPayPercent] = useState(0);
   const [transactionComplete, setTransactionComplete] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
-    title: '', profile: '', currency: '', period: '', itemName: '', price: '', category: '', seller: false,
-    description: '', shippingMethod: '', shippingFeeBy: '', shippingCost: '', paymentBy: '', buyer: false,
+    title: '', profile: '', currency: '', party: '', period: '', itemName: '', price: 0, category: '', seller: false,
+    description: '', shippingFeeBy: '', shippingCost: 0, paymentBy: '', buyer: false,
   });
+
+  const { dispatch } = TransactionState()
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,13 +37,12 @@ const NewTransaction = () => {
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
-
     setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
 
     try {
+      console.log(transactionComplete, {...newTransaction})
       if (transactionComplete){
-        console.log('first')
-        await fetch(
+        const response = await fetch(
           `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
           {
             method: 'POST',
@@ -47,6 +50,10 @@ const NewTransaction = () => {
             body: JSON.stringify({ ...newTransaction }),
           }
         );
+
+        if (!response.ok) throw new Error
+        console.log('Transaction complete')
+        dispatch({type: 'ADD_TRANSACTION', payload: {...newTransaction}})
 
         toast.success('Transaction created successfully')
         setTimeout(() => navigate('/user/review-transaction'), 2000);
@@ -60,9 +67,9 @@ const NewTransaction = () => {
         else if (!newTransaction.price) toast.error('Please fill the price field')
         else if (!newTransaction.category) toast.error('Please categorize the objet in transaction')
         else if (!newTransaction.description) toast.error('Please briefly describe the objet in transaction')
-        else if (!newTransaction.shippingMethod) toast.error('Please fill the Shopping method field')
         else if (!newTransaction.shippingFeeBy) toast.error('Please select who pays shipping fee')
         else if (!newTransaction.shippingCost) toast.error('Please fill the Shipping cost field')
+        else if (!isEmail(newTransaction.party)) toast.error('Please fill the party email address correctly')
         else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee')
       }
     } catch (error) {
@@ -98,22 +105,22 @@ const NewTransaction = () => {
           <Input name='price' value={newTransaction.price} onChange={handleInputChange} type='text' label='Price' />
         </div>
         <div className="*:w-full">
-          <Input name='category' value={newTransaction.category} onChange={handleInputChange} type='text' label='Item category' />
           <Input name='description' value={newTransaction.description} onChange={handleInputChange} type='text' label='Item description' />
         </div>
-        <div className="md:flex w-full gap-6">
-          <div className="flex *:w-full md:w-2/3 md:gap-6  max-md:flex-col">
-            <Input name='shippingMethod' value={newTransaction.shippingMethod} onChange={handleInputChange} type='text' label='Shipping method' />
-            <div className="form p-0">
-              <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-500'}`}>
-                <option value="">Select</option>
-                <option value="Buyer">Buyer</option>
-                <option value="Seller">Seller</option>
-              </select>
-              <label htmlFor="shippingFeeBy" className="form__label">Shipping fee paid by</label>
-            </div>
+        <div className="md:flex *:w-full gap-6">
+          <Input name='category' value={newTransaction.category} onChange={handleInputChange} type='text' label='Item category' />
+          <Input name='party' value={newTransaction.party} onChange={handleInputChange} type='text' label='Party Email Address' />
+        </div>
+        <div className="md:flex *:w-full gap-6">
+          <div className="form p-0">
+            <select  name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-500'}`}>
+              <option value="">Select</option>
+              <option value="Buyer">Buyer</option>
+              <option value="Seller">Seller</option>
+            </select>
+            <label htmlFor="shippingFeeBy" className="form__label">Shipping fee paid by</label>
           </div>
-          <Input className="md:w-1/3" name='shippingCost' value={newTransaction.shippingCost} onChange={handleInputChange} type='text' label='Shipping cost' />
+          <Input name='shippingCost' value={newTransaction.shippingCost} onChange={handleInputChange} type='text' label='Shipping cost' />
         </div>
         <div>
           <p className="text-[#FF4B26] text-sm mt-6">SafeTra fee paid by:</p>
