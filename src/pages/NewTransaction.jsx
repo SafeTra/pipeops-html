@@ -40,6 +40,7 @@ const NewTransaction = () => {
     setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
 
     try {
+      console.log(newTransaction)
       if (transactionComplete){
         const response = await fetch(
           `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
