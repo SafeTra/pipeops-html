@@ -12,6 +12,8 @@ const urlMap = {
   'Completed': '/completed-transactions',
 };
 
+const token = localStorage.getItem('token');
+
 const Transaction = () => {
   const [table, setTable] = useState('Action Required');
   const [loading, setLoading] = useState(false);
@@ -22,16 +24,18 @@ const Transaction = () => {
       try {
         setLoading(true); // Set loading to true before making the request
         const endpoint = urlMap[table];
-        const res = await axios.get(`https://safetra-be.onrender.com/api/v1/transaction${endpoint}`, {
+        const res = await axios.get(`https://safetra-be.onrender.com/api/v1/transactions${endpoint}`, {
           headers: {
             'Content-Type': 'application/json',
+             'Authorization': `Bearer ${token}`,
           },
         });
 
+      console.log("we reached here")
+        
         if (res && res.status === 200) {
-          const dataArray = res?.data?.data;
-          setData(dataArray);
-          console.log(res.data)
+          console.log("we reached here")
+          console.log(res.data.message)
           setLoading(false);
         }
       } catch (err) {
@@ -108,7 +112,7 @@ const Transaction = () => {
               <h2 className="py-8 font-inter text-[16px]">
                 No transactions yet, Click below to start a new transaction.
               </h2>
-              <Link to="/user/newtransaction" className="w-[16%] h-[20%]">
+              <Link to="/user/new-transaction" className="w-[16%] h-[20%]">
                 <button className="btn btn-form">Let's get started</button>
               </Link>
             </div>
