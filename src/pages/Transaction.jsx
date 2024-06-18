@@ -12,6 +12,8 @@ const urlMap = {
   'Completed': '/completed-transactions',
 };
 
+const token = localStorage.getItem('token');
+
 const Transaction = () => {
   const [table, setTable] = useState('Action Required');
   const [loading, setLoading] = useState(false);
@@ -25,13 +27,15 @@ const Transaction = () => {
         const res = await axios.get(`https://safetra-be.onrender.com/api/v1/transactions${endpoint}`, {
           headers: {
             'Content-Type': 'application/json',
+             'Authorization': `Bearer ${token}`,
           },
         });
 
+      console.log("we reached here")
+        
         if (res && res.status === 200) {
-          const dataArray = res?.data?.data;
-          setData(dataArray);
-          console.log(res.data)
+          console.log("we reached here")
+          console.log(res.data.message)
           setLoading(false);
         }
       } catch (err) {
