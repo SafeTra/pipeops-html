@@ -5,7 +5,6 @@ function TransactionDetails() {
 		<div>
 			<div className="TransactionDetails1">
 				<h4 className="font-medium">Transaction Details</h4>
-
 				<div className="border flex mt-6 mb-6 py-4 px-5">
 					<div className="item">
 						<h5 className="font-medium">Selling a Mansion</h5>
@@ -34,7 +33,9 @@ function TransactionDetails() {
 					</ul>
 				</div>
 				<div className="order-last">
-					<h4 className="font-medium text-purple-700">How the totals are calculated</h4>
+					<h4 className="font-medium text-purple-700">
+						How the totals are calculated
+					</h4>
 					<ul>
 						<li>NGN78,000,000.00</li>
 						<li>NGN2,000.00</li>
@@ -53,15 +54,29 @@ function TransactionDetails() {
 					<li>NGN190,000.00</li>
 				</ul>
 			</div>
-			<p className="customer-notice">All prices are in NGN, Taxes applies</p>
+			<p className="customer-notice py-6 text-center text-gray-500">
+				All prices are in NGN, Taxes applies
+			</p>
 			<div className="BuyerContainer">
 				<h3>Buyer Details</h3>
-				<div className="BuyerDetails">
-					<fieldset className="Email">
-						<legend>Email</legend>
-						<input type="email" value="fidelis@yopmail.com" />
-					</fieldset>
-					<div className="CountryMobile-putBorder">🏁 +234</div>
+				<div className="BuyerDetails pt-6 pb-5">
+					<div>
+						<fieldset className="Email border border-solid border-grey-300 p-2 text-sm">
+							<legend>Email</legend>
+							<input
+								className="pr-20 py-0 focus:outline-none"
+								type="email"
+								placeholder="fidelis@yopmail.com"
+							/>
+						</fieldset>
+					</div>
+					<div className="CountryMobile border border-solid border-grey-300 py-1 px-5">
+						<input
+							className="focus:outline-none py-1"
+							type="number"
+							value="🏁 +234"
+						/>
+					</div>
 				</div>
 			</div>
 			<footer>
