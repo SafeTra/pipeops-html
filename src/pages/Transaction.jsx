@@ -12,12 +12,11 @@ const urlMap = {
   'Completed': '/completed-transactions',
 };
 
-const token = localStorage.getItem('token');
-
 const Transaction = () => {
   const [table, setTable] = useState('Action Required');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,26 +30,32 @@ const Transaction = () => {
         const res = await axios.get(url, {
           headers: {
             'Content-Type': 'application/json',
-             'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
           },
         });
 
-        
         if (res && res.status === 200) {
           console.log("Data fetched successfully");
-          console.log(res.data.message)
-          setLoading(false);
+          console.log(res.data)
+          setData(res.data || []);
         } else {
           console.log("Failed to fetch data");
+          setData([]); // Set data to an empty array if fetch fails
         }
       } catch (err) {
-        console.log(err.message);
+        console.error(`Error: ${err.response ? err.response.data.message : err.message}`);
+        setData([]); // Set data to an empty array in case of error
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, [table]);
+    if (token) {
+      fetchData();
+    } else {
+      console.log("No token found");
+    }
+  }, [table, token]);
 
   return (
     <DashboardContainer childClassName='w-full' bgClr="white" title='My Transactions'>
@@ -61,7 +66,7 @@ const Transaction = () => {
           </div>
         </Link>
 
-        <Link to="/user/new-transaction" className="h-[20%] ">
+        <Link to="/user/new-transaction" className="h-[20%]">
           <button className="btn btn-form">New Transaction</button>
         </Link>
       </div>
@@ -124,9 +129,14 @@ const Transaction = () => {
           ) : (
             <div>
               {data.map((transaction, index) => (
-                <div key={index} className="transaction-item">
-                  {/* Render transaction details here */}
-                  <p>{transaction.detail}</p> {/* Replace 'detail' with the actual transaction property */}
+                <div key={index} className="transaction-item p-4 border rounded-md mb-4">
+                  <h4 className="font-bold text-lg">{transaction.transaction_title}</h4>
+                  <p><strong>Party:</strong> {transaction.party}</p>
+                  <p><strong>Price:</strong> {transaction.price} {transaction.currency}</p>
+                  <p><strong>Status:</strong> {transaction.status}</p>
+                  <p><strong>Description:</strong> {transaction.description}</p>
+                  <p><strong>Initiated At:</strong> {transaction.initiated_at || "N/A"}</p>
+                  <p><strong>Completed At:</strong> {transaction.completed_at || "N/A"}</p>
                 </div>
               ))}
             </div>
