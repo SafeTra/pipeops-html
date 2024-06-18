@@ -20,7 +20,7 @@ const NewTransaction = () => {
     const { name, value, type, checked } = e.target;
     setNewTransaction(prevState => ({
       ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'period' || name === 'shippingCost' ? Number(value) : value),
     }));
   };
 
@@ -33,21 +33,21 @@ const NewTransaction = () => {
       setPayPercent(0);
     }
     newTransaction.paymentBy = newTransaction.seller && newTransaction.buyer ? 'Both' : newTransaction.buyer ? 'Buyer' : 'Seller'
-  }, [newTransaction.seller, newTransaction.buyer]);
+    setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
+  }, [newTransaction]);
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
-    setTransactionComplete(Object.values(newTransaction).every(value => value !== ''));
 
     try {
-      console.log(transactionComplete, newTransaction)
+      console.log(newTransaction)
       if (transactionComplete){
         const response = await fetch(
           `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, },
-            body: JSON.stringify({ ...newTransaction }),
+            body: JSON.stringify({ newTransaction }),
           }
         );
 
@@ -58,17 +58,17 @@ const NewTransaction = () => {
         setTimeout(() => navigate('/user/review-transaction'), 2000);
       }
       else {
-        if (!newTransaction.title) toast.error('Please fill the transaction title field')
+        if (!newTransaction.title) toast.error('Please fill transaction title field')
         else if (!newTransaction.profile) toast.error('Please select your profile')
         else if (!newTransaction.currency) toast.error('Please select a currency')
-        else if (!newTransaction.period) toast.error('Please fill the Inspecified period field')
-        else if (!newTransaction.itemName) toast.error('Please fill the Item name field')
-        else if (!newTransaction.price) toast.error('Please fill the price field')
-        else if (!newTransaction.category) toast.error('Please categorize the objet in transaction')
-        else if (!newTransaction.description) toast.error('Please briefly describe the objet in transaction')
+        else if (!newTransaction.period) toast.error('Please fill Inspecified period field')
+        else if (!newTransaction.itemName) toast.error('Please fill Item name field')
+        else if (!newTransaction.price) toast.error('Please fill price field')
+        else if (!newTransaction.category) toast.error('Please categorize objet in transaction')
+        else if (!newTransaction.description) toast.error('Please briefly describe objet in transaction')
         else if (!newTransaction.shippingFeeBy) toast.error('Please select who pays shipping fee')
-        else if (!newTransaction.shippingCost) toast.error('Please fill the Shipping cost field')
-        else if (!isEmail(newTransaction.party)) toast.error('Please fill the party email address correctly')
+        else if (!newTransaction.shippingCost) toast.error('Please fill Shipping cost field')
+        else if (!isEmail(newTransaction.party)) toast.error('Please fill party email address correctly')
         else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee')
       }
     } catch (error) {

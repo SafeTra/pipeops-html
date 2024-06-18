@@ -2,10 +2,24 @@ import { TransactionDetails} from '..'
 import { CurrencySelect, DashboardContainer, Input } from "..";
 import { ToastContainer, toast } from 'react-toastify';
 import { TransactionState } from '../data/Context'
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const ReviewTransaction = () => {
+  const navigate = useNavigate();
+  console.log(transactions, newTransaction)
+
   const {state: {transactions}, dispatch } = TransactionState()
-  const newTransaction = transactions
+  const [newTransaction, setNewTransaction] = useState({})
+  useEffect(() => {setNewTransaction({...transactions})}, [transactions])
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewTransaction(prevState => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'period' || name === 'shippingCost' ? Number(value) : value),
+    }));
+  };
 
   const handleNewTransaction = async e => {
     e.preventDefault();
@@ -62,8 +76,8 @@ const ReviewTransaction = () => {
           <Input name='price' value={transactions.price} onChange={handleInputChange} type='number' label='Price' />
         </div>
       </form>
+      <TransactionDetails/>
     </DashboardContainer>
-    <TransactionDetails/>
     <ToastContainer />
     </>
   )
