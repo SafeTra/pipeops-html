@@ -82,7 +82,7 @@ function TransactionDetails() {
 			<footer>
 				<div>
 					<input type="checkbox" id="agree_to_terms" />
-					<label for="agree_to_terms">
+					<label htmlFor="agree_to_terms">
 						I have read and agree to the{" "}
 						<a href="terms_and_conditions.html">
 							safeTra Terms & Conditions <span>and</span>Privacy Policy

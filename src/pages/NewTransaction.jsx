@@ -8,11 +8,11 @@ import isEmail from "validator/lib/isEmail";
 const NewTransaction = () => {
   const navigate = useNavigate();
   const [payPercent, setPayPercent] = useState(0);
-  const [transactionComplete, setTransactionComplete] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
-    title: '', profile: '', currency: '', party: '', period: '', itemName: '', price: 0, category: '', seller: false,
-    description: '', shippingFeeBy: '', shippingCost: 0, paymentBy: '', buyer: false,
+    party: '', title: '', category: '', price: 0, profile: '', escrow_fee: '', inspection_period: 0,
+    shipping_fee_tax: '', shipping_cost: 0, currency: '', description: '',
   });
+
   const token = localStorage.getItem('token');
   const { dispatch } = TransactionState()
 
@@ -20,7 +20,7 @@ const NewTransaction = () => {
     const { name, value, type, checked } = e.target;
     setNewTransaction(prevState => ({
       ...prevState,
-      [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'period' || name === 'shippingCost' ? Number(value) : value),
+      [name]: type === 'checkbox' ? checked : (name === 'price' || name === 'inspection_period' || name === 'shipping_cost' ? Number(value) : value),
     }));
   };
 
@@ -33,30 +33,28 @@ const NewTransaction = () => {
       setPayPercent(0);
     }
     newTransaction.paymentBy = newTransaction.seller && newTransaction.buyer ? 'Both' : newTransaction.buyer ? 'Buyer' : 'Seller'
-  }, [newTransaction.seller, newTransaction.buyer]);
+  }, [newTransaction]);
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
-
     const isComplete = Object.values(newTransaction).every(value => value !== '' && value !== 0 && isEmail(newTransaction.party));
-    setTransactionComplete(isComplete);
 
     if (!isComplete) {
       if (!newTransaction.title) toast.error('Please fill transaction title field');
       else if (!newTransaction.profile) toast.error('Please select your profile');
       else if (!newTransaction.currency) toast.error('Please select a currency');
-      else if (!newTransaction.period) toast.error('Please fill Inspecified period field');
-      else if (!newTransaction.itemName) toast.error('Please fill Item name field');
+      else if (!newTransaction.inspection_period) toast.error('Please fill inspection period field');
+      /* else if (!newTransaction.itemName) toast.error('Please fill Item name field'); */
       else if (!newTransaction.price) toast.error('Please fill price field');
       else if (!newTransaction.category) toast.error('Please categorize objet in transaction');
       else if (!newTransaction.description) toast.error('Please briefly describe objet in transaction');
-      else if (!newTransaction.shippingFeeBy) toast.error('Please select who pays shipping fee');
-      else if (!newTransaction.shippingCost) toast.error('Please fill Shipping cost field');
+      else if (!newTransaction.shipping_fee_tax) toast.error('Please select who pays shipping fee');
+      else if (!newTransaction.shipping_cost) toast.error('Please fill Shipping cost field');
       else if (!isEmail(newTransaction.party)) toast.error('Please fill party email address correctly');
       else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee');
       return;
     }
-
+    console.log(isComplete, newTransaction);
     try {
       const response = await fetch(
         `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
@@ -67,8 +65,7 @@ const NewTransaction = () => {
         }
       );
 
-      if (!response.ok) throw new Error('API request failed');
-
+      //if (!response.ok) throw new Error('API request failed');
       dispatch({ type: 'ADD_TRANSACTION', payload: { ...newTransaction } });
 
       toast.success('Transaction created successfully');
@@ -98,11 +95,11 @@ const NewTransaction = () => {
               <label htmlFor="currency" className="form__label">Currency</label>
             </div>
           </div>
-          <Input className="md:w-1/3" name='period' value={newTransaction.period} onChange={handleInputChange} type='number' label='Inspection period (days)' />
+          <Input className="md:w-1/3" name='inspection_period' value={newTransaction.inspection_period} onChange={handleInputChange} type='number' label='Inspection period (days)' />
         </div>
         <h2 className="lg:text-lg text-base mt-6">Transaction details</h2>
         <div className="flex *:w-full md:gap-6 max-md:flex-col">
-          <Input name='itemName' value={newTransaction.itemName} onChange={handleInputChange} type='text' label='Item name' />
+          {/* <Input name='itemName' value={newTransaction.itemName} onChange={handleInputChange} type='text' label='Item name' /> */}
           <Input name='price' value={newTransaction.price} onChange={handleInputChange} type='number' label='Price' />
         </div>
         <div className="*:w-full">
@@ -114,14 +111,14 @@ const NewTransaction = () => {
         </div>
         <div className="md:flex *:w-full gap-6">
           <div className="form p-0">
-            <select name="shippingFeeBy" value={newTransaction.shippingFeeBy} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shippingFeeBy && 'text-gray-500'}`}>
+            <select name="shipping_fee_tax" value={newTransaction.shipping_fee_tax} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shipping_fee_tax && 'text-gray-500'}`}>
               <option value="">Select</option>
               <option value="Buyer">Buyer</option>
               <option value="Seller">Seller</option>
             </select>
-            <label htmlFor="shippingFeeBy" className="form__label">Shipping fee paid by</label>
+            <label htmlFor="shipping_fee_tax" className="form__label">Shipping fee paid by</label>
           </div>
-          <Input name='shippingCost' value={newTransaction.shippingCost} onChange={handleInputChange} type='number' label='Shipping cost' />
+          <Input name='shipping_cost' value={newTransaction.shipping_cost} onChange={handleInputChange} type='number' label='Shipping cost' />
         </div>
         <div>
           <p className="text-[#FF4B26] text-sm mt-6">SafeTra fee paid by:</p>
