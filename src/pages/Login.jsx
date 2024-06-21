@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import isEmail from 'validator/lib/isEmail';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     const checkboxRef = useRef(null)
     const [focusState, setFocusState] = useState({
@@ -21,29 +22,41 @@ const Login = () => {
         e.preventDefault();
 
         try {
+          setLoading(true);
           if (password.length >= 8 && isEmail(email)) {
             const response = await fetch(`https://safetra-be.onrender.com/api/v1/auth/login`, {
               method: 'POST', headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({email, password})
             })
 
-            if (response.status === 403) toast.error("Invalid credentials")
-            else if (response.status === 404) toast.error("User not found.")
+            if (response.status === 403) {
+              setLoading(false);
+              toast.error("Invalid credentials")
+            } else if (response.status === 404) {
+              setLoading(false);
+              toast.error("User not found.")
+            }
 
-            if (!response.ok) throw new Error
+            if (!response.ok) {
+              setLoading(false);
+              throw new Error
+            }
 
             const {token} = await response.json()
 
             localStorage.setItem('token', token)
             toast.success('Login successfully')
+            setLoading(false);
             setTimeout(() => navigate('/user'), 2000);
           }
           else{
+            setLoading(false);
             if (!email.trim() || !password.trim()) toast.error('Please fill in all fields correctly.')
             else if (!isEmail(email)) toast.error("Invalid email address")
             else if (password.length < 8) toast.error("Password is not correct")
           }
         } catch (error) {
+          setLoading(false);
           console.error(`Error during login:`, error)
         }
     }
@@ -68,7 +81,7 @@ const Login = () => {
                 <div><input ref={checkboxRef} name='rememberMe' type="checkbox"/> Remember Me</div>
                 <Link to='/forgotPassword' className='hover:text-[#e54e0c] hover:underline'>Forgot Your Password?</Link>
               </div>
-              <button className="btn btn-form" type="submit" onClick={handleLogin}>Sign In</button>
+              <button className="btn btn-form" type="submit" onClick={handleLogin}>{loading ? "Signing you In.." : "Sign In"}</button>
               <ToastContainer />
               <p className=" text-center">Don’t have an account? <Link to='/signup' className="font-bold underline text-[#e54e0c]">JOIN SAFETRA</Link></p>
           </form>
