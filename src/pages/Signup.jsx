@@ -106,10 +106,27 @@ const Signup = () => {
         </div>
       </div>
       <SuccessModal open={openSuccessModal} onClose={() => setOpenSuccessModal(false)}>
-        <div className="text-center text-base pt-4">
-          <p>A verification email has been sent to {email} </p>
-          <p>Please verify your email to have access to our platform</p>
+      <div className="text-center w-full">
+          <div>
+            <h3 style={{ color: "rgb(234,88,12)" }} className="font-int font-[700] text-[20px]">
+              Successful!
+            </h3>
+          </div>
+          <div className="w-full text-center">
+            <p className="text-[14px] font-int">
+            A verification email has been sent to {email}</p>
+            <p>Please verify your email to have access to our platform</p>
+           <p>Email not found? Reload and wait for 5minutes and check your spam</p> 
+          </div>
         </div>
+    <button
+          type="button"
+          onClick={handleContinueToEmail}
+          style={{ backgroundColor: 'rgb(234,88,12)', color: 'rgba(255, 255, 255, 1)' }}
+          className="w-[150px] text-[14px] py-2 rounded-lg font-int font-[600]"
+        >
+          Continue to email
+        </button>
       </SuccessModal>
     </div>
   );
