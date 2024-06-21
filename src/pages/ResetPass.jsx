@@ -64,6 +64,7 @@ const ResetPass = () => {
           // setData(response.data);
           setOpen2(true);
         } else {
+          setLoading(false);
           toast.error(
             "Unsuccessful! Password not Updated"
           );
