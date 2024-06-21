@@ -20,14 +20,7 @@ const Signup = () => {
   const [isCapitalise, setIsCapitalise] = useState(false);
   const [isNumAndSpecial, setIsNumAndSpecial] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
-  const handleContinueToEmail = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      window.location.href = 'mailto:';
-    } else {
-      window.open('https://mail.google.com', '_blank');
-    }
-  };
+  
 
   const handleFocus = (field) => setFocusState(prevFocusState => ({ ...prevFocusState, [field]: true }));
   const handleBlur = (field) => setFocusState(prevFocusState => ({ ...prevFocusState, [field]: false }));
