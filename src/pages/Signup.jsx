@@ -6,6 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 import SuccessModal from '../components/modals/SuccessModal';
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +30,8 @@ const Signup = () => {
     }
   };
 
+  
+
   const handleFocus = (field) => setFocusState(prevFocusState => ({ ...prevFocusState, [field]: true }));
   const handleBlur = (field) => setFocusState(prevFocusState => ({ ...prevFocusState, [field]: false }));
 
@@ -44,6 +47,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       if (isStrongPass && checkboxRef.current.checked) {
         const response = await fetch(`https://safetra-be.onrender.com/api/v1/auth/register`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -51,14 +55,17 @@ const Signup = () => {
         });
 
         if (response.status === 409) {
+          setLoading(false);
           toast.error("User already exists");
+          
           return;
         }
 
         if (!response.ok) {
+          setLoading(false);
           throw new Error(`Failed to register: ${response.statusText}`);
         }
-
+        setLoading(false);
         toast.success('Signup successfully');
         setOpenSuccessModal(true);
       }
@@ -71,6 +78,7 @@ const Signup = () => {
         else if (!checkboxRef.current.checked) toast.error("Please agree to the Terms and Conditions");
       }
     } catch (error) {
+      setLoading(false);
       console.error(`Error during registration:`, error);
     }
   }
@@ -106,7 +114,7 @@ const Signup = () => {
                 </ul>
               </div>}
               <div className="checkbox d-flex fw-500"><input ref={checkboxRef} className='mr-2' required type="checkbox" />I agree to <Link to="">Terms & Conditions</Link></div>
-              <button className="btn btn-form" type="submit" onClick={handleSubmit}>Sign Up</button>
+              <button className="btn btn-form" type="submit" onClick={handleSubmit}>{loading ? "Registering.." : "Sign Up"}</button>
               <ToastContainer />
               <p className=" text-center">Already have an account? <Link to="/login" className="font-bold underline text-[#FB923C]">LOGIN</Link></p>
             </form>

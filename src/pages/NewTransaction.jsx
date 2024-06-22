@@ -9,12 +9,13 @@ const NewTransaction = () => {
   const navigate = useNavigate();
   const [payPercent, setPayPercent] = useState(0);
   const [newTransaction, setNewTransaction] = useState({
-    party: '', title: '', category: '', price: 0, profile: '', escrow_fee: '', inspection_period: 0,
-    shipping_fee_tax: '', shipping_cost: 0, currency: '', description: '',
+    transaction_title: '', transaction_category: '', inspection_period: '', shipping_fee_tax: '', shipping_cost: 0,  party: '',  item_name: '', price: 0, profile: '', 
+    escrow_fee: '', description: '', currency: '',
   });
 
   const token = localStorage.getItem('token');
-  const { dispatch } = TransactionState()
+
+  const { dispatch } = TransactionState();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -32,58 +33,69 @@ const NewTransaction = () => {
     } else {
       setPayPercent(0);
     }
-    newTransaction.paymentBy = newTransaction.seller && newTransaction.buyer ? 'Both' : newTransaction.buyer ? 'Buyer' : 'Seller'
-  }, [newTransaction]);
+    setNewTransaction(prevState => ({
+      ...prevState,
+      escrow_fee: newTransaction.seller && newTransaction.buyer ? 'Both' : newTransaction.buyer ? 'Buyer' : 'Seller',
+    }));
+  }, [newTransaction.seller, newTransaction.buyer]);
 
   const handleNewTransaction = async (e) => {
     e.preventDefault();
     const isComplete = Object.values(newTransaction).every(value => value !== '' && value !== 0 && isEmail(newTransaction.party));
 
-    if (!isComplete) {
-      if (!newTransaction.title) toast.error('Please fill transaction title field');
-      else if (!newTransaction.profile) toast.error('Please select your profile');
-      else if (!newTransaction.currency) toast.error('Please select a currency');
-      else if (!newTransaction.inspection_period) toast.error('Please fill inspection period field');
-      /* else if (!newTransaction.itemName) toast.error('Please fill Item name field'); */
-      else if (!newTransaction.price) toast.error('Please fill price field');
-      else if (!newTransaction.category) toast.error('Please categorize objet in transaction');
-      else if (!newTransaction.description) toast.error('Please briefly describe objet in transaction');
-      else if (!newTransaction.shipping_fee_tax) toast.error('Please select who pays shipping fee');
-      else if (!newTransaction.shipping_cost) toast.error('Please fill Shipping cost field');
-      else if (!isEmail(newTransaction.party)) toast.error('Please fill party email address correctly');
-      else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee');
-      return;
-    }
-    console.log(isComplete, newTransaction);
     try {
-      const response = await fetch(
-        `https://safetra-be.onrender.com/api/v1/transactions/create-transaction`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify(newTransaction),
-        }
-      );
+      const { seller, buyer, ...transactionData } = newTransaction; // Remove seller and buyer fields
+      // Ensure number fields are correctly parsed
+      transactionData.inspection_period = Number(transactionData.inspection_period);
+      transactionData.price = Number(transactionData.price);
+      transactionData.shipping_cost = Number(transactionData.shipping_cost);
 
-      //if (!response.ok) throw new Error('API request failed');
-      dispatch({ type: 'ADD_TRANSACTION', payload: { ...newTransaction } });
+      console.log(transactionComplete, { ...transactionData });
+      if (transactionComplete) {
+        const response = await fetch(
+          'https://safetra-be.onrender.com/api/v1/transactions/create-transaction',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(transactionData),
+          }
+        );
 
-      toast.success('Transaction created successfully');
-      setTimeout(() => navigate('/user/review-transaction'), 2000);
+        if (!response.ok) throw new Error('Failed to create transaction');
+        console.log('Transaction complete');
+        dispatch({ type: 'ADD_TRANSACTION', payload: { ...transactionData } });
+
+        toast.success('Transaction created successfully');
+        setTimeout(() => navigate('/user/review-transaction'), 2000);
+      } else {
+        if (!newTransaction.transaction_title) toast.error('Please fill the transaction title field');
+        else if (!newTransaction.profile) toast.error('Please select your profile');
+        else if (!newTransaction.currency) toast.error('Please select a currency');
+        else if (!newTransaction.inspection_period) toast.error('Please fill the Inspection field');
+        else if (!newTransaction.item_name) toast.error('Please fill the Item name field');
+        else if (!newTransaction.price) toast.error('Please fill the price field');
+        else if (!newTransaction.transaction_category) toast.error('Please categorize the object in transaction');
+        else if (!newTransaction.description) toast.error('Please briefly describe the object in transaction');
+        else if (!newTransaction.shipping_fee_tax) toast.error('Please select who pays shipping fee');
+        else if (!newTransaction.shipping_cost) toast.error('Please fill the Shipping cost field');
+        else if (!isEmail(newTransaction.party)) toast.error('Please fill the party email address correctly');
+        else if (!newTransaction.seller && !newTransaction.buyer) toast.error('Please check who pays SafeTra fee');
+      }
     } catch (error) {
       console.log('Error during transaction creation: ', error);
     }
   };
 
   return (
-    <DashboardContainer bgClr="white" url='/user' title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
+    <DashboardContainer bgClr="white" url='/user' transaction_title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
+    <DashboardContainer bgClr="white" url='/user' transaction_title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
       <form onSubmit={handleNewTransaction}>
         <hr className='mt-6' />
-        <Input name='title' value={newTransaction.title} onChange={handleInputChange} type='text' label='Transaction Title' />
+        <Input name='transaction_title' value={newTransaction.transaction_title} onChange={handleInputChange} type='text' label='Transaction Title' />
         <div className="md:flex w-full gap-6">
-          <div className="flex max-md:flex-col *:w-full md:w-2/3 md:gap-6">
+          <div className="flex max-md:flex-col w-full md:w-2/3 md:gap-6">
             <div className="form p-0">
-              <select name="profile" value={newTransaction.profile} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.profile && 'text-gray-500'}`}>
+              <select name="profile" value={newTransaction.profile} onChange={handleInputChange} className="form__input w-full text-gray-500">
                 <option value="">Select</option>
                 <option value="Buyer">Buyer</option>
                 <option value="Seller">Seller</option>
@@ -98,26 +110,28 @@ const NewTransaction = () => {
           <Input className="md:w-1/3" name='inspection_period' value={newTransaction.inspection_period} onChange={handleInputChange} type='number' label='Inspection period (days)' />
         </div>
         <h2 className="lg:text-lg text-base mt-6">Transaction details</h2>
-        <div className="flex *:w-full md:gap-6 max-md:flex-col">
-          {/* <Input name='itemName' value={newTransaction.itemName} onChange={handleInputChange} type='text' label='Item name' /> */}
+        <div className="flex w-full md:gap-6 max-md:flex-col">
+          <Input name='item_name' value={newTransaction.item_name} onChange={handleInputChange} type='text' label='Item name' />
           <Input name='price' value={newTransaction.price} onChange={handleInputChange} type='number' label='Price' />
         </div>
-        <div className="*:w-full">
+        <div className="w-full">
           <Input name='description' value={newTransaction.description} onChange={handleInputChange} type='text' label='Item description' />
         </div>
-        <div className="md:flex *:w-full gap-6">
-          <Input name='category' value={newTransaction.category} onChange={handleInputChange} type='text' label='Item category' />
+        <div className="md:flex w-full gap-6">
+          <Input name='transaction_category' value={newTransaction.transaction_category} onChange={handleInputChange} type='text' label='Item category' />
           <Input name='party' value={newTransaction.party} onChange={handleInputChange} type='text' label='Party Email Address' />
         </div>
-        <div className="md:flex *:w-full gap-6">
+        <div className="md:flex w-full gap-6">
           <div className="form p-0">
-            <select name="shipping_fee_tax" value={newTransaction.shipping_fee_tax} onChange={handleInputChange} className={`form__input w-full ${!newTransaction.shipping_fee_tax && 'text-gray-500'}`}>
+            <select name="shipping_fee_tax" value={newTransaction.shipping_fee_tax} onChange={handleInputChange} className="form__input w-full text-gray-500">
               <option value="">Select</option>
               <option value="Buyer">Buyer</option>
               <option value="Seller">Seller</option>
             </select>
             <label htmlFor="shipping_fee_tax" className="form__label">Shipping fee paid by</label>
+            <label htmlFor="shipping_fee_tax" className="form__label">Shipping fee paid by</label>
           </div>
+          <Input name='shipping_cost' value={newTransaction.shipping_cost} onChange={handleInputChange} type='number' label='Shipping cost' />
           <Input name='shipping_cost' value={newTransaction.shipping_cost} onChange={handleInputChange} type='number' label='Shipping cost' />
         </div>
         <div>
@@ -144,7 +158,7 @@ const NewTransaction = () => {
                 />
                 <label className="font-medium" htmlFor="buyer">Buyer</label>
               </div>
-              <div className="*:py-3">
+              <div className="py-3">
                 <span className="rounded-s-lg border px-3 border-r-0">%</span>
                 <span className="rounded-e-lg border px-5">{payPercent}</span>
               </div>
@@ -155,6 +169,7 @@ const NewTransaction = () => {
       </form>
       <ToastContainer />
     </DashboardContainer>
+
   );
 }
 
