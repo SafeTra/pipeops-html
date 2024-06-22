@@ -35,14 +35,17 @@ const Transaction = () => {
         });
 
         if (res && res.status === 200) {
+          setLoading(false);
           console.log("Data fetched successfully");
           console.log(res.data)
           setData(res.data || []);
         } else {
+          setLoading(false);
           console.log("Failed to fetch data");
           setData([]); // Set data to an empty array if fetch fails
         }
       } catch (err) {
+        setLoading(false);
         console.error(`Error: ${err.response ? err.response.data.message : err.message}`);
         setData([]); // Set data to an empty array in case of error
       } finally {

@@ -88,6 +88,7 @@ const NewTransaction = () => {
 
   return (
     <DashboardContainer bgClr="white" url='/user' transaction_title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
+    <DashboardContainer bgClr="white" url='/user' transaction_title='Start Transaction' childClassName='lg:w-2/3 mx-auto'>
       <form onSubmit={handleNewTransaction}>
         <hr className='mt-6' />
         <Input name='transaction_title' value={newTransaction.transaction_title} onChange={handleInputChange} type='text' label='Transaction Title' />
@@ -128,7 +129,9 @@ const NewTransaction = () => {
               <option value="Seller">Seller</option>
             </select>
             <label htmlFor="shipping_fee_tax" className="form__label">Shipping fee paid by</label>
+            <label htmlFor="shipping_fee_tax" className="form__label">Shipping fee paid by</label>
           </div>
+          <Input name='shipping_cost' value={newTransaction.shipping_cost} onChange={handleInputChange} type='number' label='Shipping cost' />
           <Input name='shipping_cost' value={newTransaction.shipping_cost} onChange={handleInputChange} type='number' label='Shipping cost' />
         </div>
         <div>
