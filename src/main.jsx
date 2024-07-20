@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import 'react-toastify/ReactToastify.css'
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
 import { NotFound, RootLayout, HomeLayout, DashboardLayout, AdminLayout } from './layouts'
-import { Home, About, Contact, Dashboard, Pricing, Login, Logout, Messages, Users, Settings, Signup, ForgotPass, ResetPass, Transaction, Integration, Disputes, Payments, NewTransaction, ConfirmEmail, ReviewTransaction, } from '.'
+import { Home, About, Contact, Dashboard, Pricing, Login, Logout, Messages, Users, Settings, Signup, ForgotPass, ResetPass, Transaction, Integration, Disputes, Payments, NewTransaction, ConfirmEmail, ReviewTransaction, Services, Support} from '.'
 
 import './index.css'
 import Context from './data/Context'
@@ -14,6 +14,8 @@ const router = createBrowserRouter(
       <Route element={<HomeLayout />}>
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
       </Route>
       <Route path='/user' element={<DashboardLayout />} >

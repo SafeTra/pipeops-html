@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link} from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import { icon_close, icon_menu, logo } from '../assets';
 import '../App.css'
 
@@ -23,23 +22,30 @@ const Header = () => {
     }, []);
 
     return(
-      <header ref={headerRef} className={`header ${isSticky ? 'sticky' : ''}`}>
+      <header className= {`${isSticky ? 'sticky' : ''}`} ref={headerRef}>
         <div className='container'>
           <nav className='d-flex justify-between'>
             <div className='d-flex justify-between'>
-              <Link to="/"><img src={logo}/></Link>   
+              <Link to="/"><img class="w-3/4 h-auto" src={logo}/></Link>   
               <img className='menu' onClick={handleMenu} src={menu ? icon_menu : icon_close}/> 
             </div>                
             <ul className={`nav_list d-flex ${menu ? 'disable' : ''}`}>
-              <li className='nav_item'> <Link to="/" className='nav_link active'>Home</Link></li>
-              <li className='nav_item'> <Link to="/about" className='nav_link'>About</Link></li>
-              <li className='nav_item'> <HashLink to="/#services" className='nav_link'>Services</HashLink></li>
-              <li className='nav_item'> <HashLink to="/#how-it-works" className='nav_link'>How It Works</HashLink></li>
-              <li className='nav_item'> <HashLink to="/#faqs" className='nav_link'>FAQs</HashLink></li>
+              <li className='nav_item'> <Link to="/" className='nav_link'>Home</Link></li>
+              <li className='nav_item'> <Link to="/about" className='nav_link'>About Us</Link></li>
+              <li className='nav_item'> <Link to="/services" className='nav_link'>Our Services</Link></li>
+              <li className='nav_item'> <Link to="/support" className='nav_link'>Support</Link></li>
             </ul>
             <ul className={`nav_list d-flex ${menu ? 'disable' : ''}`}>                            
-              <li className='nav_item'><Link to='/login' className='btn btn-outline'>Sign In</Link></li>
-              <li className='nav_item'><Link to='/signup' className='btn btn-primary'>Join SafeTra</Link></li>
+              {/* <li className='nav_item'><Link to='/login' className='btn btn-outline'>Sign In</Link></li>
+              <li className='nav_item'><Link to='/signup' className='btn btn-primary'>Join SafeTra</Link></li> */}
+              <div class="flex">
+              <li className='nav_item'><Link to='/login'  class="flex-1 border border-customBlue text-[#48C5D5] font-bold py-3 px-6 rounded-l myBtnOutline">
+                  Sign In
+                </Link></li>
+                <li className='nav_item'><Link to='/signup' class="flex-1 bg-customBlue text-white font-bold py-3 px-4 rounded-r myBtn">
+                  Join SafeTra
+                </Link></li>
+              </div>
             </ul>
           </nav>
         </div>

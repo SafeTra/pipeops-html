@@ -1,6 +1,8 @@
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Login from './pages/Login';
+import Services from './pages/Services';
+import Support from './pages/Support';
 import About from './pages/About';
 import Signup from './pages/Signup';
 import Logout from './pages/Logout';
@@ -32,6 +34,8 @@ import CurrencySelect from './components/CurrencySelect';
 export {
 	Home,
 	About,
+	Services,
+	Support,
 	Users,
 	Login,
 	Input,
